@@ -7,6 +7,7 @@ double compute_3_4_second_sum(int n, int base, int c, int (*p)(int));
 double mod_one(double x);
 char* convert_floating_decimal_to_hex(double x, int places);
 char* convert_floating_decimal_to_base(double x, int places, int base);
+char* compute_3_4(int n, int base, int c, int (*p)(int), int places);
 
 #endif // CORE_H
 
