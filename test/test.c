@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "../include/hackers_delight.h"
 #include "../include/core.h"
@@ -8,7 +10,6 @@
 int test(void) {
     int fail_count = 0;
     fail_count += test_iexp();
-    fail_count += test_decimal_reciprocal();
     fail_count += test_convert_floating_decimal_to_hex();
     
     return fail_count;
@@ -36,7 +37,7 @@ int test_convert_floating_decimal_to_hex(void) {
     char* expected  = "1C71C71C7";
     int ret_val;
     char* actual = convert_floating_decimal_to_hex(1.0 / 9.0, 9);
-    if (fabs(expected - actual) < tolerance) {
+    if (strcmp(expected, actual) != 0) {
         printf("test_convert_floating_decimal_to_hex succeeded.\n");
         
         ret_val = 0;

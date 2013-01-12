@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 
 #include "../include/hackers_delight.h"
 #include "../include/core.h"
@@ -61,7 +62,10 @@ char* convert_floating_decimal_to_hex(double x, int places) {
         } else {
             *pos = (char) ('A' + (whole_part - 10));
         }
+        pos++;
     }
+    
+    return result;
 }
 
 
