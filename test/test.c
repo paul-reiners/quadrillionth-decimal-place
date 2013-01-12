@@ -27,7 +27,7 @@ int test_iexp(void) {
         return 0;
     } else {
         printf("test_iexp failed.\n");
-        printf("expected: %d; actual: %d.\n", expected, actual);
+        printf("\texpected: %d; actual: %d.\n", expected, actual);
         
         return 1;
     }
@@ -37,13 +37,14 @@ int test_convert_floating_decimal_to_hex(void) {
     char* expected  = "1C71C71C7";
     int ret_val;
     char* actual = convert_floating_decimal_to_hex(1.0 / 9.0, 9);
-    if (strcmp(expected, actual) != 0) {
+    if (strcmp(expected, actual) == 0) {
         printf("test_convert_floating_decimal_to_hex succeeded.\n");
+        printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
         
         ret_val = 0;
     } else {
         printf("test_convert_floating_decimal_to_hex failed.\n");
-        printf("expected: %s; actual: %s.\n", expected, actual);
+        printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
         
         ret_val = 1;
     }
