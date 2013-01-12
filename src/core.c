@@ -53,14 +53,23 @@ int get_int_part(double x) {
     return (int) x;
 }
 
-// Use http://mathforum.org/library/drmath/view/64392.html to convert double to other bases.
+// Use  to 
 char* convert_floating_decimal_to_hex(double x, int places) {
+    return convert_floating_decimal_to_base(x, places, 16);
+}
+
+/**
+ * Convert double to other bases.
+ * Based on algorithm given in "Math Forum - Ask Dr. Math"
+ *     http://mathforum.org/library/drmath/view/64392.html
+ */
+char* convert_floating_decimal_to_base(double x, int places, int base) {
     char* result = malloc(places * sizeof(char) + 1);
     char* pos = result;
     double frac_part = x;
     for (int i = 0; i < places; i++) {
         frac_part = mod_one(frac_part);
-        frac_part *= 16;
+        frac_part *= base;
         int whole_part = get_int_part(frac_part);
         if (0 <= whole_part && whole_part <= 9) {
             *pos = (char) ('0' + whole_part);
@@ -73,5 +82,4 @@ char* convert_floating_decimal_to_hex(double x, int places) {
     
     return result;
 }
-
 
