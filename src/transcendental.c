@@ -16,7 +16,7 @@ int log_2_binary_p(int k) {
 
 char* pi_hex(int first_place, int num_places) {
     int base = 16;
-    double sum = 
+    long double sum = 
         4 * compute_pi_sum1(first_place, num_places) 
             - 2 * compute_pi_sum2(first_place, num_places) 
             - compute_pi_sum3(first_place, num_places) 
@@ -25,26 +25,26 @@ char* pi_hex(int first_place, int num_places) {
     return convert_floating_decimal_to_base(sum, num_places, base);
 }
 
-double compute_pi_sum1(int first_place, int num_places) {
-    double result = compute_3_4(first_place, 16, 1, &pi_hex_p1, true);
+long double compute_pi_sum1(int first_place, int num_places) {
+    long double result = compute_3_4(first_place, 16, 1, &pi_hex_p1, true);
     
     return result;
 }
 
-double compute_pi_sum2(int first_place, int num_places) {
-    double result = compute_3_4(first_place, 16, 1, &pi_hex_p2, true);
+long double compute_pi_sum2(int first_place, int num_places) {
+    long double result = compute_3_4(first_place, 16, 1, &pi_hex_p2, true);
     
     return result;
 }
 
-double compute_pi_sum3(int first_place, int num_places) {
-    double result = compute_3_4(first_place, 16, 1, &pi_hex_p3, true);
+long double compute_pi_sum3(int first_place, int num_places) {
+    long double result = compute_3_4(first_place, 16, 1, &pi_hex_p3, true);
     
     return result;
 }
 
-double compute_pi_sum4(int first_place, int num_places) {
-    double result = compute_3_4(first_place, 16, 1, &pi_hex_p4, true);
+long double compute_pi_sum4(int first_place, int num_places) {
+    long double result = compute_3_4(first_place, 16, 1, &pi_hex_p4, true);
     
     return result;
 }
