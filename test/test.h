@@ -7,7 +7,10 @@ int test_decimal_reciprocal(void);
 int test_convert_floating_decimal_to_hex(void);
 int test_log_2_binary(void);
 int test_convert_log_of_2_to_binary(void);
-int test_pi_hex(void);
+int test_pi_hex_0_8(void);
+int test_pi_hex_1_8(void);
+int test_pi_hex_2_8(void);
+int test_pi_hex_n_places(char* expected, int n, int places);
 
 #endif // TEST_H
 

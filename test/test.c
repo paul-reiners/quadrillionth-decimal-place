@@ -14,7 +14,9 @@ int test(void) {
     fail_count += test_convert_floating_decimal_to_hex();
     fail_count += test_convert_log_of_2_to_binary();
     fail_count += test_log_2_binary();
-    fail_count += test_pi_hex();
+    fail_count += test_pi_hex_0_8();
+    fail_count += test_pi_hex_1_8();
+    fail_count += test_pi_hex_2_8();
     
     return fail_count;
 }
@@ -41,26 +43,49 @@ int test_log_2_binary(void) {
     return ret_val;
 }
 
-int test_pi_hex(void) {
+int test_pi_hex_0_8(void) {
     // pi base 16 = 3.243F6A88...
     char* expected = "243F6A88";
     int n = 0;
     int places = 8;
+    
+    return test_pi_hex_n_places(expected, n, places);
+}
+
+int test_pi_hex_n_places(char* expected, int n, int places) {
     char* actual = pi_hex(n, places);
     int ret_val;
     if (strcmp(expected, actual) == 0) {
-        printf("test_pi_hex succeeded.\n");
+        printf("test_pi_hex_n_places(%d, %d) succeeded.\n", n, places);
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
         
         ret_val = 0;
     } else {
-        printf("test_pi_hex failed.\n");
+        printf("test_pi_hex_n_places(%d, %d) failed.\n", n, places);
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
         
         ret_val = 1;
     }
     
     return ret_val;
+}
+
+int test_pi_hex_1_8(void) {
+    // pi base 16 = 3.243F6A888...
+    char* expected = "43F6A888";
+    int n = 1;
+    int places = 8;
+    
+    return test_pi_hex_n_places(expected, n, places);
+}
+
+int test_pi_hex_2_8(void) {
+    // pi base 16 = 3.243F6A8885...
+    char* expected = "3F6A8885";
+    int n = 2;
+    int places = 8;
+    
+    return test_pi_hex_n_places(expected, n, places);
 }
 
 
