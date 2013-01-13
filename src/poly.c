@@ -1,4 +1,4 @@
-int log_2_binary(int k) {
+int log_2_binary_p(int k) {
     return k;
 }
 

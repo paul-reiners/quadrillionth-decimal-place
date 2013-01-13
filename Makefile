@@ -17,14 +17,14 @@ CFLAGS = -ggdb -O0 -Qunused-arguments -std=c99 -Wall -Werror
 EXE = project
 
 # space-separated list of header files
-HDRS = ./include/hackers_delight.h ./include/core.h ./include/poly.h ./test/test.h
+HDRS = ./include/hackers_delight.h ./include/core.h ./include/poly.h ./include/transcendental.h ./test/test.h
 
 # space-separated list of libraries, if any,
 # each of which should be prefixed with -l
 LIBS = -lm
 
 # space-separated list of source files
-SRCS = ./src/project.c ./src/hackers_delight.c ./src/core.c ./src/poly.c ./test/test.c
+SRCS = ./src/project.c ./src/hackers_delight.c ./src/core.c ./src/poly.c ./src/transcendental.c ./test/test.c
 
 # automatically generated list of object files
 OBJS = $(SRCS:.c=.o)

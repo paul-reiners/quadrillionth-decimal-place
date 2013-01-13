@@ -7,6 +7,7 @@
 #include "../include/hackers_delight.h"
 #include "../include/core.h"
 #include "../include/poly.h"
+#include "../include/transcendental.h"
 
 int test(void) {
     int fail_count = 0;
@@ -22,11 +23,8 @@ int test_compute_3_4(void) {
     // log(2) base 2 = 0.101100010111...
     char* expected = "101100010111";
     int n = 0;
-    int base = 2;
-    int c = 1;
-    int (*p)(int) = &log_2_binary;
     int places = 12;
-    char* actual = compute_3_4(n, base, c, p, places);
+    char* actual = log_2_binary(n, places);
     int ret_val;
     if (strcmp(expected, actual) == 0) {
         printf("test_compute_3_4 succeeded.\n");
