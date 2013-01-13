@@ -11,6 +11,7 @@ char* convert_floating_decimal_to_hex(double x, int places);
 char* convert_floating_decimal_to_base(double x, int places, int base);
 double compute_3_4(int n, int base, int c, int (*p)(int), bool start_at_0);
 char* compute_3_4_to_base(int n, int base, int c, int (*p)(int), int places, bool start_at_0);
+double calculate_machine_epsilon(void);
 
 #endif // CORE_H
 

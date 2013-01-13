@@ -11,6 +11,7 @@ int test_pi_hex_0_8(void);
 int test_pi_hex_1_8(void);
 int test_pi_hex_2_8(void);
 int test_pi_hex_n_places(char* expected, int n, int places);
+int test_pi_hex_1000000(void);
 
 #endif // TEST_H
 

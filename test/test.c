@@ -17,6 +17,7 @@ int test(void) {
     fail_count += test_pi_hex_0_8();
     fail_count += test_pi_hex_1_8();
     fail_count += test_pi_hex_2_8();
+    fail_count += test_pi_hex_1000000();
     
     return fail_count;
 }
@@ -47,7 +48,15 @@ int test_pi_hex_0_8(void) {
     // pi base 16 = 3.243F6A88...
     char* expected = "243F6A88";
     int n = 0;
-    int places = 8;
+    int places = strlen(expected);
+    
+    return test_pi_hex_n_places(expected, n, places);
+}
+
+int test_pi_hex_1000000(void) {
+    char* expected = "26C65E52CB4593";
+    int n = 1000000;
+    int places = strlen(expected);
     
     return test_pi_hex_n_places(expected, n, places);
 }
@@ -74,7 +83,7 @@ int test_pi_hex_1_8(void) {
     // pi base 16 = 3.243F6A888...
     char* expected = "43F6A888";
     int n = 1;
-    int places = 8;
+    int places = strlen(expected);
     
     return test_pi_hex_n_places(expected, n, places);
 }
@@ -83,7 +92,7 @@ int test_pi_hex_2_8(void) {
     // pi base 16 = 3.243F6A8885...
     char* expected = "3F6A8885";
     int n = 2;
-    int places = 8;
+    int places = strlen(expected);
     
     return test_pi_hex_n_places(expected, n, places);
 }

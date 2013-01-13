@@ -38,6 +38,7 @@ double compute_3_4_second_sum(int n, int base, int c, int (*p)(int)) {
     double sum = 0.0;
     int k = floor(n / c) + 1;
     double prev_sum = sum;
+    double machEps = calculate_machine_epsilon();
     do {
         prev_sum = sum;
         int poly_result = (*p)(k);
@@ -47,9 +48,26 @@ double compute_3_4_second_sum(int n, int base, int c, int (*p)(int)) {
         sum = mod_one(sum);
         
         k++;
-    } while (fabs(sum - prev_sum) > 0.00000001);
+    } while (fabs(sum - prev_sum) > machEps);
     
     return sum;
+}
+
+double calculate_machine_epsilon(void) {
+    // From http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_C
+    // Calculated Machine float epsilon:  1.19209E-07
+    // Calculated Machine double epsilon: 2.22045E-16
+
+    double machEps = 1.0;
+ 
+    do {
+       machEps /= 2.0;
+       // If next epsilon yields 1, then break, because current
+       // epsilon is the machine epsilon.
+    }
+    while ((double)(1.0 + (machEps/2.0)) != 1.0);
+ 
+    return machEps;
 }
 
 double mod_one(double x) {
