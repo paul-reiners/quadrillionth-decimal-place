@@ -8,8 +8,14 @@ double decimal_reciprocal(int n, int pos) {
     return (double) iexp(10, pos - 1, n) / (double) n;
 }
 
-char* compute_3_4(int n, int base, int c, int (*p)(int), int places) {
+double compute_3_4(int n, int base, int c, int (*p)(int)) {
     double sum = compute_3_4_first_sum(n, base, c, p) + compute_3_4_second_sum(n, base, c, p);
+    
+    return sum;
+}
+
+char* compute_3_4_to_base(int n, int base, int c, int (*p)(int), int places) {
+    double sum = compute_3_4(n, base, c, p);
     
     return convert_floating_decimal_to_base(sum, places, base);
 }
