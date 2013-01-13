@@ -10,3 +10,8 @@ char* log_2_binary(int first_place, int num_places) {
     return result;
 }
 
+char* pi_hex(int first_place, int num_places) {
+    // TODO
+    return "";
+}
+

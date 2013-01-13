@@ -14,12 +14,12 @@ int test(void) {
     fail_count += test_iexp();
     fail_count += test_convert_floating_decimal_to_hex();
     fail_count += test_convert_log_of_2_to_binary();
-    fail_count += test_compute_3_4();
+    fail_count += test_log_2_binary();
     
     return fail_count;
 }
 
-int test_compute_3_4(void) {
+int test_log_2_binary(void) {
     // log(2) base 2 = 0.101100010111...
     char* expected = "101100010111";
     int n = 0;
@@ -27,12 +27,12 @@ int test_compute_3_4(void) {
     char* actual = log_2_binary(n, places);
     int ret_val;
     if (strcmp(expected, actual) == 0) {
-        printf("test_compute_3_4 succeeded.\n");
+        printf("test_log_2_binary succeeded.\n");
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
         
         ret_val = 0;
     } else {
-        printf("test_compute_3_4 failed.\n");
+        printf("test_log_2_binary failed.\n");
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
         
         ret_val = 1;
