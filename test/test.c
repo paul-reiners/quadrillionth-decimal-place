@@ -6,7 +6,6 @@
 #include "test.h"
 #include "../include/hackers_delight.h"
 #include "../include/core.h"
-#include "../include/poly.h"
 #include "../include/transcendental.h"
 
 int test(void) {
@@ -15,6 +14,7 @@ int test(void) {
     fail_count += test_convert_floating_decimal_to_hex();
     fail_count += test_convert_log_of_2_to_binary();
     fail_count += test_log_2_binary();
+    fail_count += test_pi_hex();
     
     return fail_count;
 }
@@ -33,6 +33,28 @@ int test_log_2_binary(void) {
         ret_val = 0;
     } else {
         printf("test_log_2_binary failed.\n");
+        printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
+        
+        ret_val = 1;
+    }
+    
+    return ret_val;
+}
+
+int test_pi_hex(void) {
+    // pi base 16 = 3.243F6A88...
+    char* expected = "243F6A88";
+    int n = 0;
+    int places = 8;
+    char* actual = pi_hex(n, places);
+    int ret_val;
+    if (strcmp(expected, actual) == 0) {
+        printf("test_pi_hex succeeded.\n");
+        printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
+        
+        ret_val = 0;
+    } else {
+        printf("test_pi_hex failed.\n");
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
         
         ret_val = 1;
