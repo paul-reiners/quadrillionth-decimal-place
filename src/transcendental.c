@@ -25,26 +25,26 @@ char* pi_hex(int first_place, int num_places) {
     return convert_floating_decimal_to_base(sum, num_places, base);
 }
 
-long double compute_pi_sum1(int first_place) {
-    long double result = compute_3_4(first_place, 16, 1, &pi_hex_p1, true);
+long double compute_pi_sum1(int d) {
+    long double result = compute_s(d, 1);
     
     return result;
 }
 
-long double compute_pi_sum2(int first_place) {
-    long double result = compute_3_4(first_place, 16, 1, &pi_hex_p2, true);
+long double compute_pi_sum2(int d) {
+    long double result = compute_s(d, 4);
     
     return result;
 }
 
-long double compute_pi_sum3(int first_place) {
-    long double result = compute_3_4(first_place, 16, 1, &pi_hex_p3, true);
+long double compute_pi_sum3(int d) {
+    long double result = compute_s(d, 5);
     
     return result;
 }
 
-long double compute_pi_sum4(int first_place) {
-    long double result = compute_3_4(first_place, 16, 1, &pi_hex_p4, true);
+long double compute_pi_sum4(int d) {
+    long double result = compute_s(d, 6);
     
     return result;
 }

@@ -14,6 +14,8 @@ int test_pi_hex_n_places(char* expected, int n, int places);
 int test_pi_hex_1000000(void);
 char *readFile(char *fileName);
 int test_big_file(void);
+int test_compute_pi_sum1(void);
+int test_compute_pi_sum2(void);
 
 #endif // TEST_H
 

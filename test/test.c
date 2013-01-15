@@ -17,9 +17,43 @@ int test(void) {
     fail_count += test_pi_hex_0_8();
     fail_count += test_pi_hex_1_8();
     fail_count += test_pi_hex_2_8();
+    fail_count += test_compute_pi_sum1();
+    fail_count += test_compute_pi_sum2();
     fail_count += test_pi_hex_1000000();
     
     return fail_count;
+}
+
+int test_compute_pi_sum1(void) {
+    long double actual = compute_pi_sum1(1000000);
+    long double expected  = 0.181039533801436067853489346252;
+    long double tolerance = 0.000000000000000000000000000001;
+    if (fabs(actual - expected) <= tolerance) {
+        printf("test_compute_pi_sum1 passed\n");
+        
+        return 0;
+    } else {
+        printf("test_compute_pi_sum1 failed\n");
+        printf("\texpected: \"%Lf\"; actual: \"%Lf\".\n", expected, actual);
+        
+        return 1;
+    } 
+}
+
+int test_compute_pi_sum2(void) {
+    long double actual = compute_pi_sum2(1000000);
+    long double expected  = 0.776065549807807461372297594382;
+    long double tolerance = 0.000000000000000000000000000001;
+    if (fabs(actual - expected) <= tolerance) {
+        printf("test_compute_pi_sum2 passed\n");
+        
+        return 0;
+    } else {
+        printf("test_compute_pi_sum2 failed\n");
+        printf("\texpected: \"%Lf\"; actual: \"%Lf\".\n", expected, actual);
+        
+        return 1;
+    } 
 }
 
 int test_big_file(void) {

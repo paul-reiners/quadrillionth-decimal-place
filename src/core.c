@@ -9,7 +9,13 @@ long double decimal_reciprocal(int n, int pos) {
 }
 
 long double compute_3_4(int n, int base, int c, int (*p)(int), bool start_at_0) {
-    long double sum = compute_3_4_first_sum(n, base, c, p, start_at_0) + compute_3_4_second_sum(n, base, c, p);
+    long double sum = mod_one(compute_3_4_first_sum(n, base, c, p, start_at_0) + compute_3_4_second_sum(n, base, c, p));
+    
+    return sum;
+}
+
+long double compute_s(int d, int j) {
+    long double sum = mod_one(compute_s_first_sum(d, j) + mod_one(compute_s_second_sum(d, j)));
     
     return sum;
 }
@@ -28,8 +34,38 @@ long double compute_3_4_first_sum(int n, int base, int c, int (*p)(int), bool st
         int num = modular_pow(base, n - c * k, poly_result);
         int denom = poly_result;
         sum += (long double) num / (long double) denom;
+    }
+    
+    return mod_one(sum);
+}
+
+long double compute_s_first_sum(int d, int j) {
+    long double sum = 0.0;
+    for (int k = 0; k <= d; k++) {
+        int poly_result = 8 * k + j;
+        int num = modular_pow(16, d - k, poly_result);
+        int denom = poly_result;
+        sum += (long double) num / (long double) denom;
         sum = mod_one(sum);
     }
+    
+    return sum;
+}
+
+long double compute_s_second_sum(int d, int j) {
+    long double sum = 0.0;
+    int k = d + 1;
+    long double prev_sum = sum;
+    long double machEps = calculate_machine_epsilon();
+    do {
+        prev_sum = sum;
+        int poly_result = 8 * k + j;
+        long double num = pow(16.0, (long double) (d - k));
+        int denom = poly_result;
+        sum += num / (long double) denom;
+        
+        k++;
+    } while (fabs(sum - prev_sum) > machEps);
     
     return sum;
 }
@@ -45,7 +81,6 @@ long double compute_3_4_second_sum(int n, int base, int c, int (*p)(int)) {
         long double num = pow(base, n - c * k);
         int denom = poly_result;
         sum += num / (long double) denom;
-        sum = mod_one(sum);
         
         k++;
     } while (fabs(sum - prev_sum) > machEps);
