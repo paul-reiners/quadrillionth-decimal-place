@@ -26,16 +26,27 @@ unsigned flp2(unsigned x) {
  *  Computing x^n mod k by binary decomposition of n.
  *  Adapted from method in "Hacker's Delight".
  */
-int iexp(int x, unsigned n, unsigned k) {
-    int p, y;
-    
-    y = 1;
-    p = x;
-    while (1) {
-        if (n & 1) y = (p*y) % k;
-        n = n >> 1;
-        if (n == 0) return y;
-        p = (p * p) % k;
+int iexp_mem_efficient(int x, unsigned n, unsigned k) {
+    int c = 1;
+    for (int i = 0; i < n; i++) {
+        c = (c * x) % k;
     }
+    
+    return c;
+}
+
+/**
+ *  Computing base^exponent mod modulus by binary decomposition of exponent.
+ *  Based on pseudocode in "Applied Cryptography" by Bruce Schneier.
+ */
+int modular_pow(int base, unsigned exponent, unsigned modulus) {
+    int result = 1;
+    while (exponent > 0) {
+        if (exponent % 2 == 1)
+           result = (result * base) % modulus;
+        exponent = exponent >> 1;
+        base = (base * base) % modulus;
+    }
+    return result;
 }
 

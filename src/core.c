@@ -5,7 +5,7 @@
 #include "../include/core.h"
 
 long double decimal_reciprocal(int n, int pos) {
-    return (long double) iexp(10, pos - 1, n) / (long double) n;
+    return (long double) modular_pow(10, pos - 1, n) / (long double) n;
 }
 
 long double compute_3_4(int n, int base, int c, int (*p)(int), bool start_at_0) {
@@ -25,7 +25,7 @@ long double compute_3_4_first_sum(int n, int base, int c, int (*p)(int), bool st
     int k_start = start_at_0 ? 0 : 1;
     for (int k = k_start; k <= floor(n / c); k++) {
         int poly_result = (*p)(k);
-        int num = iexp(base, n - c * k, poly_result);
+        int num = modular_pow(base, n - c * k, poly_result);
         int denom = poly_result;
         sum += (long double) num / (long double) denom;
         sum = mod_one(sum);

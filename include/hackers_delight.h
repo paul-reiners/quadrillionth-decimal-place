@@ -3,7 +3,7 @@
 
 int pop(unsigned x);
 unsigned flp2(unsigned x);
-int iexp(int x, unsigned n, unsigned k);
+int modular_pow(int base, unsigned exponent, unsigned modulus);
 
 #endif // HACKERS_DELIGHT_H
 

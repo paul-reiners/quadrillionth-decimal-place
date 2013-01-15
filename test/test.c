@@ -22,6 +22,13 @@ int test(void) {
     return fail_count;
 }
 
+int test_big_file(void) {
+    // char *fileName = "./test/pi.txt";
+    // char* pi = readFile(fileName);
+    
+    return 0;
+}
+
 int test_log_2_binary(void) {
     // log(2) base 2 = 0.101100010111...
     char* expected = "101100010111";
@@ -122,21 +129,37 @@ int test_convert_log_of_2_to_binary(void) {
 
 
 int test_iexp(void) {
+    int error_count = 0;
+    
     int x = 10;
     unsigned n = 999;
     unsigned k = 257;
     int expected =  96;
-    int actual = iexp(x, n, k);
-    if (expected == actual) {
-        printf("test_iexp succeeded.\n");
-        
-        return 0;
-    } else {
+    int actual = modular_pow(x, n, k);
+    if (expected != actual) {
         printf("test_iexp failed.\n");
         printf("\texpected: %d; actual: %d.\n", expected, actual);
         
-        return 1;
+        error_count++;
     }
+    
+    x = 4;
+    n = 13;
+    k = 497;
+    expected =  445;
+    actual = modular_pow(x, n, k);
+    if (expected != actual) {
+        printf("test_iexp failed.\n");
+        printf("\texpected: %d; actual: %d.\n", expected, actual);
+        
+        error_count++;
+    }
+    
+    if (error_count == 0) {
+        printf("test_iexp passed.\n");
+    }
+    
+    return error_count;
 }
 
 int test_convert_floating_decimal_to_hex(void) {
@@ -158,5 +181,31 @@ int test_convert_floating_decimal_to_hex(void) {
     free(actual);
     
     return ret_val;
+}
+
+/**
+ * From http://stackoverflow.com/a/4823209/7648
+ */
+char *readFile(char *fileName)
+{
+/*    FILE *file = fopen(fileName, "r");*/
+/*    char *code;*/
+/*    size_t n = 0;*/
+/*    int c;*/
+
+/*    if (file == NULL)*/
+/*        return NULL; //could not open file*/
+
+/*    code = malloc(1000);*/
+
+/*    while ((c = fgets(file)) != EOF)*/
+/*    {*/
+/*        code[n++] = (char) c;*/
+/*    }*/
+
+/*    // don't forget to terminate with the null character*/
+/*    code[n] = '\0';        */
+
+    return 0;
 }
 
