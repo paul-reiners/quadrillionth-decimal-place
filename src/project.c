@@ -9,5 +9,7 @@ int main(int argc, char* argv[]) {
     } else {
         printf("Tests failed.\n");
     }
+    
+    return 0;
 }
 

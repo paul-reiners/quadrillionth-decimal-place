@@ -17,10 +17,10 @@ int log_2_binary_p(int k) {
 char* pi_hex(int first_place, int num_places) {
     int base = 16;
     long double sum = 
-        4 * compute_pi_sum1(first_place) 
-            - 2 * compute_pi_sum2(first_place) 
-            - compute_pi_sum3(first_place) 
-            - compute_pi_sum4(first_place);
+        4 * compute_pi_sum1(first_place - 1) 
+            - 2 * compute_pi_sum2(first_place - 1) 
+            - compute_pi_sum3(first_place - 1) 
+            - compute_pi_sum4(first_place - 1);
             
     return convert_floating_decimal_to_base(sum, num_places, base);
 }

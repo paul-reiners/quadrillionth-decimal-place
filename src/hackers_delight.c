@@ -1,3 +1,5 @@
+#include <gmp.h>
+
 int pop(unsigned x) {
     // From "Hacker's Delight" (page 82)
     x = x - ((x >> 1) & 0x55555555);
@@ -26,7 +28,7 @@ unsigned flp2(unsigned x) {
  *  Computing x^n mod k by binary decomposition of n.
  *  Adapted from method in "Hacker's Delight".
  */
-int modular_pow(int x, int n, int k) {
+int modular_pow_2(int x, int n, int k) {
     int c = 1;
     for (int i = 0; i < n; i++) {
         c = (c * x) % k;
@@ -36,17 +38,27 @@ int modular_pow(int x, int n, int k) {
 }
 
 /**
- *  Computing base^exponent mod modulus by binary decomposition of exponent.
- *  Based on pseudocode in "Applied Cryptography" by Bruce Schneier.
  */
-int modular_pow_2(int base, int exponent, int modulus) {
-    int result = 1;
-    while (exponent > 0) {
-        if (exponent % 2 == 1)
-           result = (result * base) % modulus;
-        exponent = exponent >> 1;
-        base = (base * base) % modulus;
-    }
+unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, unsigned long int modulus) {
+    mpz_t rop;
+	mpz_init(rop);
+
+    mpz_t base;
+	mpz_init(base);
+    mpz_set_ui(base, b);
+    
+    mpz_t exp;
+	mpz_init(exp);
+    mpz_set_ui(exp, exponent);
+    
+    mpz_t mod;
+	mpz_init(mod);
+    mpz_set_ui(mod, modulus);
+
+    mpz_powm(rop, base, exp, mod);
+    
+    unsigned long int result = mpz_get_ui(rop);
+    
     return result;
 }
 

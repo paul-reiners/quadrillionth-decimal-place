@@ -21,7 +21,7 @@ HDRS = ./include/hackers_delight.h ./include/core.h ./include/transcendental.h .
 
 # space-separated list of libraries, if any,
 # each of which should be prefixed with -l
-LIBS = -lm
+LIBS = -lm -lgmp
 
 # space-separated list of source files
 SRCS = ./src/project.c ./src/hackers_delight.c ./src/core.c ./src/transcendental.c ./test/test.c
