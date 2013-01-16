@@ -2,6 +2,8 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <time.h>
 
 #include "test.h"
 #include "../include/hackers_delight.h"
@@ -19,22 +21,25 @@ int test(void) {
     fail_count += test_pi_hex_2_8();
     fail_count += test_compute_pi_sum1();
     fail_count += test_compute_pi_sum2();
-    fail_count += test_pi_hex_1000000();
+    fail_count += test_pi_hex_10_n();
+    printf("\n");
     
     return fail_count;
 }
 
 int test_compute_pi_sum1(void) {
     long double actual = compute_pi_sum1(1000000);
-    long double expected  = 0.181039533801436067853489346252;
-    long double tolerance = 0.000000000000000000000000000001;
-    if (fabs(actual - expected) <= tolerance) {
+    long double expected  = 0.18103953;
+    long double tolerance = 0.00000001;
+    long double delta = fabs(actual - expected);
+    if (delta <= tolerance) {
         printf("test_compute_pi_sum1 passed\n");
         
         return 0;
     } else {
         printf("test_compute_pi_sum1 failed\n");
-        printf("\texpected: \"%Lf\"; actual: \"%Lf\".\n", expected, actual);
+        printf("\texpected: %Lf; actual: %Lf.\n", expected, actual);
+        printf("\tdifference was: %Lf.\n", delta);
         
         return 1;
     } 
@@ -42,8 +47,8 @@ int test_compute_pi_sum1(void) {
 
 int test_compute_pi_sum2(void) {
     long double actual = compute_pi_sum2(1000000);
-    long double expected  = 0.776065549807807461372297594382;
-    long double tolerance = 0.000000000000000000000000000001;
+    long double expected  = 0.77606554;
+    long double tolerance = 0.00000001;
     if (fabs(actual - expected) <= tolerance) {
         printf("test_compute_pi_sum2 passed\n");
         
@@ -94,20 +99,31 @@ int test_pi_hex_0_8(void) {
     return test_pi_hex_n_places(expected, n, places);
 }
 
-int test_pi_hex_1000000(void) {
-    char* expected = "26C65E52CB4593";
-    int n = 1000000;
-    int places = strlen(expected);
+int test_pi_hex_10_n(void) {
+    char* expecteds[] = { "26C65E52CB459", "17AF5863EFED", "ECB840E2192" };
+    int ns[] =  { 1000000, 10000000, 100000000 };
+    int error_count = 0;
+    for (int i = 0; i < sizeof(ns) / sizeof(int); i++) {
+        char* expected = expecteds[i];
+        int places = strlen(expected);
+        int n = ns[i];
+        error_count += test_pi_hex_n_places(expected, n, places);
+    }
     
-    return test_pi_hex_n_places(expected, n, places);
+    return error_count;
 }
 
 int test_pi_hex_n_places(char* expected, int n, int places) {
-    char* actual = pi_hex(n, places);
+    time_t t1,t2;
+    (void) time(&t1);
+	char* actual = pi_hex(n, places);
+    (void) time(&t2);
+    
     int ret_val;
     if (strcmp(expected, actual) == 0) {
         printf("test_pi_hex_n_places(%d, %d) succeeded.\n", n, places);
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
+		printf("\tTime to compute = %ld seconds\n", (int) t2-t1);
         
         ret_val = 0;
     } else {
@@ -215,31 +231,5 @@ int test_convert_floating_decimal_to_hex(void) {
     free(actual);
     
     return ret_val;
-}
-
-/**
- * From http://stackoverflow.com/a/4823209/7648
- */
-char *readFile(char *fileName)
-{
-/*    FILE *file = fopen(fileName, "r");*/
-/*    char *code;*/
-/*    size_t n = 0;*/
-/*    int c;*/
-
-/*    if (file == NULL)*/
-/*        return NULL; //could not open file*/
-
-/*    code = malloc(1000);*/
-
-/*    while ((c = fgets(file)) != EOF)*/
-/*    {*/
-/*        code[n++] = (char) c;*/
-/*    }*/
-
-/*    // don't forget to terminate with the null character*/
-/*    code[n] = '\0';        */
-
-    return 0;
 }
 

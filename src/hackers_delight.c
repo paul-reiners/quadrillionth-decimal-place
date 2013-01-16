@@ -58,7 +58,12 @@ unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, u
     mpz_powm(rop, base, exp, mod);
     
     unsigned long int result = mpz_get_ui(rop);
-    
+  
+  	mpz_clear(exp);
+	mpz_clear(base);
+	mpz_clear(mod);
+	mpz_clear(rop);
+  
     return result;
 }
 
