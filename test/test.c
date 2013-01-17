@@ -6,9 +6,10 @@
 #include <time.h>
 
 #include "test.h"
-#include "../include/hackers_delight.h"
-#include "../include/core.h"
-#include "../include/transcendental.h"
+#include "../include/aux.h"
+#include "../include/bbp.h"
+#include "../include/pi.h"
+#include "../include/log2.h"
 
 int test(void) {
     int fail_count = 0;

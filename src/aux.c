@@ -1,55 +1,39 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "../include/hackers_delight.h"
-#include "../include/core.h"
+#include <gmp.h>
 
-long double decimal_reciprocal(int n, int pos) {
-    return (long double) modular_pow(10, pos - 1, n) / (long double) n;
-}
+#include "../include/aux.h"
 
-long double compute_3_4(int n, int base, int c, int (*p)(int), bool start_at_0) {
-    long double sum = mod_one(compute_3_4_first_sum(n, base, c, p, start_at_0) + compute_3_4_second_sum(n, base, c, p));
+/**
+ * Basically a wrapper method for the GMP method mpz_set_ui.
+ */
+unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, unsigned long int modulus) {
+    mpz_t rop;
+	mpz_init(rop);
+
+    mpz_t base;
+	mpz_init(base);
+    mpz_set_ui(base, b);
     
-    return sum;
-}
-
-char* compute_3_4_to_base(int n, int base, int c, int (*p)(int), int places, bool start_at_0) {
-    long double sum = compute_3_4(n, base, c, p, start_at_0);
+    mpz_t exp;
+	mpz_init(exp);
+    mpz_set_ui(exp, exponent);
     
-    return convert_floating_decimal_to_base(sum, places, base);
-}
+    mpz_t mod;
+	mpz_init(mod);
+    mpz_set_ui(mod, modulus);
 
-long double compute_3_4_first_sum(int n, int base, int c, int (*p)(int), bool start_at_0) {
-    long double sum = 0.0;
-    int k_start = start_at_0 ? 0 : 1;
-    for (int k = k_start; k <= floor(n / c); k++) {
-        int poly_result = (*p)(k);
-        int num = modular_pow(base, n - c * k, poly_result);
-        int denom = poly_result;
-        sum += (long double) num / (long double) denom;
-        sum = mod_one(sum);
-    }
+    mpz_powm(rop, base, exp, mod);
     
-    return mod_one(sum);
-}
-
-long double compute_3_4_second_sum(int n, int base, int c, int (*p)(int)) {
-    long double sum = 0.0;
-    int k = floor(n / c) + 1;
-    long double prev_sum = sum;
-    long double machEps = calculate_machine_epsilon();
-    do {
-        prev_sum = sum;
-        int poly_result = (*p)(k);
-        long double num = pow(base, n - c * k);
-        int denom = poly_result;
-        sum += num / (long double) denom;
-        
-        k++;
-    } while (fabs(sum - prev_sum) > machEps);
-    
-    return sum;
+    unsigned long int result = mpz_get_ui(rop);
+  
+  	mpz_clear(exp);
+	mpz_clear(base);
+	mpz_clear(mod);
+	mpz_clear(rop);
+  
+    return result;
 }
 
 long double calculate_machine_epsilon(void) {
