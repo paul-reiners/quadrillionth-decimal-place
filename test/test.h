@@ -11,7 +11,6 @@ int test_pi_hex_0_8(void);
 int test_pi_hex_1_8(void);
 int test_pi_hex_2_8(void);
 int test_pi_hex_n_places(char* expected, int n, int places);
-int test_big_file(void);
 int test_compute_pi_sum1(void);
 int test_compute_pi_sum2(void);
 int test_pi_hex_10_n(void);

@@ -61,13 +61,6 @@ int test_compute_pi_sum2(void) {
     } 
 }
 
-int test_big_file(void) {
-    // char *fileName = "./test/pi.txt";
-    // char* pi = readFile(fileName);
-    
-    return 0;
-}
-
 int test_log_2_binary(void) {
     // log(2) base 2 = 0.101100010111...
     char* expected = "101100010111";
@@ -123,7 +116,13 @@ int test_pi_hex_n_places(char* expected, int n, int places) {
     if (strcmp(expected, actual) == 0) {
         printf("test_pi_hex_n_places(%d, %d) succeeded.\n", n, places);
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
-		printf("\tTime to compute = %ld seconds\n", (int) t2-t1);
+        int left = (int) (t2-t1);
+        int hours = left / (60 * 60);
+        left -= (60 * 60) * hours;
+        int minutes = left / 60;
+        left = left -= minutes * 60;
+        int seconds = left;
+		printf("\tTime to compute = %02d:%02d:%02d.\n", hours, minutes, seconds);
         
         ret_val = 0;
     } else {
