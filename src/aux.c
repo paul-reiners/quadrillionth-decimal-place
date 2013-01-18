@@ -7,6 +7,8 @@
 
 /**
  * Basically a wrapper method for the GMP method mpz_set_ui.
+ * Based on
+ *      http://rosettacode.org/wiki/Modular_exponentiation#C
  */
 unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, unsigned long int modulus) {
     mpz_t rop;
@@ -38,9 +40,6 @@ unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, u
 
 long double calculate_machine_epsilon(void) {
     // From http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_C
-    // Calculated Machine float epsilon:       1.19209E-07
-    // Calculated Machine double epsilon:      2.22045E-16
-    // Calculated Machine long double epsilon: 1.084202e-19
 
     long double machEps = 1.0;
  
