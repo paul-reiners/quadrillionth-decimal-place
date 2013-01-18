@@ -1,13 +1,14 @@
 #include "../include/log2.h"
 #include "../include/bbp.h"
+#include "../include/aux.h"
 
-char* log_2_binary(int first_place, int num_places) {
+char* log_2_binary(int d, int num_places) {
     int base = 2;
     int c = 1;
     int (*p)(int) = &log_2_binary_p;
-    char* result = compute_3_4_to_base(first_place, base, c, p, num_places, false);
+    long double result = compute_3_4(d - 1, base, c, p, false);
     
-    return result;
+    return convert_floating_decimal_to_base(result, num_places, base);
 }
 
 int log_2_binary_p(int k) {

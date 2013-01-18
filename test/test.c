@@ -65,7 +65,7 @@ int test_compute_pi_sum2(void) {
 int test_log_2_binary(void) {
     // log(2) base 2 = 0.101100010111...
     char* expected = "101100010111";
-    int n = 0;
+    int n = 1;
     int places = 12;
     char* actual = log_2_binary(n, places);
     int ret_val;
@@ -80,6 +80,7 @@ int test_log_2_binary(void) {
         
         ret_val = 1;
     }
+    free(actual);
     
     return ret_val;
 }
@@ -132,6 +133,7 @@ int test_pi_hex_n_places(char* expected, int n, int places) {
         
         ret_val = 1;
     }
+    free(actual);
     
     return ret_val;
 }

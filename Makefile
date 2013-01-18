@@ -38,4 +38,4 @@ $(OBJS): $(HDRS) Makefile
 
 # housekeeping
 clean:
-	rm -f core $(EXE) *.o ./src/*.o
+	rm -f core $(EXE) *.o ./src/*.o ./test/*.o
