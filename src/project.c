@@ -23,14 +23,19 @@ int main(int argc, char* argv[]) {
     // n = number to calculate digits of
     // d = starting digit
     
+    char* usage = "Usage: project [-t] [-n number_code] first_digit";
+    if (argc == 1 || (argc == 2 && strcmp(argv[1], "-h") == 0)) {
+        printf("%s\n", usage);
+        
+        return 0;
+    }
+    
     int tflag = 0;
     int uflag = 0;
     char *nvalue = NULL;
-    char *dvalue = NULL;
-    int index;
     int c;
 
-    while ((c = getopt (argc, argv, "tun:d:")) != -1)
+    while ((c = getopt (argc, argv, "tun:")) != -1)
      switch (c)
        {
        case 't':
@@ -41,9 +46,6 @@ int main(int argc, char* argv[]) {
          break;
        case 'n':
          nvalue = optarg;
-         break;
-       case 'd':
-         dvalue = optarg;
          break;
        case '?':
          if (optopt == 'n' || optopt == 'd')
@@ -58,47 +60,49 @@ int main(int argc, char* argv[]) {
        default:
          abort ();
        }
-
-    printf ("tflag = %d, uflag = %d, nvalue = %s, dvalue = %s\n",
-           tflag, uflag, nvalue, dvalue);
-
-    for (index = optind; index < argc; index++)
-     printf ("Non-option argument %s\n", argv[index]);
+       
+    if (uflag) {
+        int result = test();
+        if (result == 0) {
+            printf("Tests succeeded.\n");
+            
+            return 0;
+        } else {
+            printf("Tests failed.\n");
+            
+            return 1;
+        }
+    } 
+    
+    int d;
+    if (optind >= argc) {
+        fprintf(stderr, "You must specify a d value.\n");
+        
+        return 1;
+    } else {
+        char *dvalue = argv[optind];
+        d = atoi(dvalue);
+    }
 
     time_t t1,t2;
     if (tflag) {
         (void) time(&t1);
     }
 	char* result = NULL;
-    if (uflag) {
-        int result = test();
-        if (result == 0) {
-            printf("Tests succeeded.\n");
-        } else {
-            printf("Tests failed.\n");
-        }
-    } else if (nvalue == NULL || strcmp(nvalue, "pi") == 0) {
-        if (dvalue == NULL) {
-           fprintf(stderr, "You must specify a -d value.\n");
-        } else {
-            int d = atoi(dvalue);
-        	result = pi_hex(d, PLACES);
-        	fprintf(stderr, "Hex digits of pi beginning at position %d: ", d);
-        	printf("%s\n", result);
-        }
+    if (nvalue == NULL || strcmp(nvalue, "pi") == 0) {
+    	result = pi_hex(d, PLACES);
+    	fprintf(stderr, "Hex digits of pi beginning at position %d: ", d);
     } else if (strcmp(nvalue, "log2") == 0) {
-        if (dvalue == NULL) {
-           fprintf(stderr, "You must specify a -d value.\n");
-        } else {
-            int d = atoi(dvalue);
-        	result = log_2_binary(d, PLACES);
-        	fprintf(stderr, "Binary digits of log(2) beginning at position %d: ", d);
-        	printf("%s\n", result);
-        }
+    	result = log_2_binary(d, PLACES);
+    	fprintf(stderr, "Binary digits of log(2) beginning at position %d: ", d);
     } else {
         fprintf(stderr, "%s is an invalid argument for -n.\n", nvalue);
         fprintf(stderr, "\t\"pi\" and \"log2\" are valid arguments.\n");
+        
+        return 1;
     }
+    printf("%s\n", result);
+
     if (tflag) {
         (void) time(&t2);
         
