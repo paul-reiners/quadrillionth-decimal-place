@@ -12,18 +12,18 @@
 #include "../include/aux.h"
 #include "../include/bbp.h"
 
-long double compute_3_4(int digit, int base, int c, int (*p)(int), bool start_at_0)
+long double compute_bbp(int digit, int base, int c, int (*p)(int), bool start_at_0)
 {
     int d = digit - 1;
     long double sum
         = mod_one(
-                compute_3_4_first_sum(d, base, c, p, start_at_0)
-                + compute_3_4_second_sum(d, base, c, p));
+                compute_bbp_first_sum(d, base, c, p, start_at_0)
+                + compute_bbp_second_sum(d, base, c, p));
 
     return sum;
 }
 
-long double compute_3_4_first_sum(int n, int base, int c, int (*p)(int), bool start_at_0)
+long double compute_bbp_first_sum(int n, int base, int c, int (*p)(int), bool start_at_0)
 {
     long double sum = 0.0;
     int k_start = start_at_0 ? 0 : 1;
@@ -39,7 +39,7 @@ long double compute_3_4_first_sum(int n, int base, int c, int (*p)(int), bool st
     return mod_one(sum);
 }
 
-long double compute_3_4_second_sum(int n, int base, int c, int (*p)(int))
+long double compute_bbp_second_sum(int n, int base, int c, int (*p)(int))
 {
     long double sum = 0.0;
     int k = floor(n / c) + 1;

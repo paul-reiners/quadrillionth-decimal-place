@@ -17,7 +17,7 @@ char* log_2_binary(int d, int num_places)
     int base = 2;
     int c = 1;
     int (*p)(int) = &log_2_binary_p;
-    long double result = compute_3_4(d, base, c, p, false);
+    long double result = compute_bbp(d, base, c, p, false);
 
     return convert_floating_decimal_to_base(result, num_places, base);
 }

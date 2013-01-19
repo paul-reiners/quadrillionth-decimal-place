@@ -25,10 +25,6 @@
 #include "../include/log2.h"
 #include "../include/aux.h"
 
-/**
- * getopt code adapted from
- *      http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html
- */
 int main(int argc, char* argv[])
 {
     char* usage = "Usage: project [-t] [-n number_code] first_digit";
@@ -101,7 +97,30 @@ int main(int argc, char* argv[])
     else
     {
         char* dvalue = argv[optind];
+        char* upper_limit_str = "100000000";
+        char too_large_err_msg[120];
+        sprintf(
+            too_large_err_msg, 
+            "Cannot handle d larger than %s.  Please specify a smaller value.\n", 
+             upper_limit_str);
+        if (strlen(dvalue) > strlen(upper_limit_str)) {
+            fprintf(stderr, "%s", too_large_err_msg);
+                
+            return 1;
+        } else if (!is_integer(dvalue)) {
+            fprintf(
+                stderr, 
+                "%s is an invalid value for d.  Please enter an integer (with no commas in it).  For example: 1000000.\n",
+                dvalue);
+                
+            return 1;
+        }
         d = atoi(dvalue);
+        if (d > 100000000) {
+            fprintf(stderr, "%s", too_large_err_msg);
+                
+            return 1;
+        }
     }
 
     time_t t1, t2;

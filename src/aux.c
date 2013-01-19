@@ -11,6 +11,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <gmp.h>
 
@@ -60,10 +61,20 @@ unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, u
     return result;
 }
 
+/*
+ * Function:  calculate_machine_epsilon
+ * --------------------
+ * Calculates the smallest floating-point difference possible on the machine 
+ * that the program is being run on.
+ *
+ * This code was not written by me.  It is from:
+ *      http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_C
+ *
+ *  returns: the smallest floating-point difference that can be represented on 
+ *  the machine the program is running on
+ */
 long double calculate_machine_epsilon(void)
 {
-    // From http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_C
-
     long double machEps = 1.0;
 
     do
@@ -77,26 +88,65 @@ long double calculate_machine_epsilon(void)
     return machEps;
 }
 
+/*
+ * Function:  mod_one 
+ * --------------------
+ * Drops the integer part of a real number.  Mathematicians use the term "mod 
+ * one", which is not the same as n % 1.
+ *
+ *  x: a real number
+ *
+ *  returns: the fractional part of x
+ */
 long double mod_one(long double x)
 {
     return x - floor(x);
 }
 
+/*
+ * Function:  get_int_part 
+ * --------------------
+ * Returns the part of a number to the left of the decimal point.
+ *
+ *  x: a real number
+ *
+ *  returns: the integer part of x
+ */
 int get_int_part(long double x)
 {
     return (int) x;
 }
 
-// Use  to
+/*
+ * Function:  convert_floating_decimal_to_hex 
+ * --------------------
+ * Converts a floating-point number to a hexadecimal representation.  The string
+ * that is returned must be freed.
+ *
+ *  x: a floating-point number < 1.0
+ *  places: the number of places to the right of the decimal point to represent 
+ *
+ *  returns: a hexadecimal representation of x
+ */
 char* convert_floating_decimal_to_hex(long double x, int places)
 {
     return convert_floating_decimal_to_base(x, places, 16);
 }
 
-/**
- * Convert long double to other bases.
+/*
+ * Function:  convert_floating_decimal_to_base
+ * --------------------
+ * Converts a floating-point number to a representation in a specified base.  
+ * The string that is returned must be freed.
+ *
  * Based on algorithm given in "Math Forum - Ask Dr. Math"
  *     http://mathforum.org/library/drmath/view/64392.html
+ *
+ *  x: a floating-point number < 1.0
+ *  places: the number of places to the right of the decimal point to represent
+ *  base: the base to be converted to 
+ *
+ *  returns: a representation of x in the specified base
  */
 char* convert_floating_decimal_to_base(long double x, int places, int base)
 {
@@ -123,6 +173,16 @@ char* convert_floating_decimal_to_base(long double x, int places, int base)
     return result;
 }
 
+/*
+ * Function:  format_elapsed_time
+ * --------------------
+ * Formats seconds as HH:MM:SS.
+ * Returned string must be freed.
+ *
+ *  elapsed_seconds: number of seconds
+ *
+ *  returns: a string in the format HH:MM:SS
+ */
 char* format_elapsed_time(int elapsed_seconds)
 {
     int left = elapsed_seconds;
@@ -135,5 +195,25 @@ char* format_elapsed_time(int elapsed_seconds)
     sprintf(formatted_time, "%02d:%02d:%02d", hours, minutes, seconds);
 
     return formatted_time;
+}
+
+/*
+ * Function:  is_integer
+ * --------------------
+ * Checks whether a string represents a decimal integer.
+ *
+ *  number_str: a string that may or may not represent an integer
+ *
+ *  returns: true iff number_str represents an integer
+ */
+bool is_integer(char* number_str) {
+    for (int i = 0; i < strlen(number_str); i++) {
+        char c = number_str[i];
+        if (!('0' <= c && c <= '9')) {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
