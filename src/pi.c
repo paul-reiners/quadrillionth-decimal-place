@@ -13,7 +13,7 @@
 #include "../include/aux.h"
 
 /*
- * Function:  pi_hex 
+ * Function:  pi_hex
  * --------------------
  * Computes the pi hex BBP formula.
  * It is the responsibility of the calling function to free the returned string.
@@ -36,7 +36,7 @@ char* pi_hex(int d, int num_places)
 }
 
 /*
- * Function:  compute_pi_sum1 
+ * Function:  compute_pi_sum1
  * --------------------
  * Computes the first term of the pi hex BBP formula.
  *
@@ -55,7 +55,7 @@ long double compute_pi_sum1(int d)
 }
 
 /*
- * Function:  compute_pi_sum2 
+ * Function:  compute_pi_sum2
  * --------------------
  * Computes the second term of the pi hex BBP formula.
  *
@@ -74,7 +74,7 @@ long double compute_pi_sum2(int d)
 }
 
 /*
- * Function:  compute_pi_sum3 
+ * Function:  compute_pi_sum3
  * --------------------
  * Computes the third term of the pi hex BBP formula.
  *
@@ -93,7 +93,7 @@ long double compute_pi_sum3(int d)
 }
 
 /*
- * Function:  compute_pi_sum4 
+ * Function:  compute_pi_sum4
  * --------------------
  * Computes the fourth term of the pi hex BBP formula.
  *
@@ -112,7 +112,7 @@ long double compute_pi_sum4(int d)
 }
 
 /*
- * Function:  pi_hex_p1 
+ * Function:  pi_hex_p1
  * --------------------
  * The first polynomial p1 used for the pi BBP formula
  *
@@ -126,7 +126,7 @@ int pi_hex_p1(int k)
 }
 
 /*
- * Function:  pi_hex_p2 
+ * Function:  pi_hex_p2
  * --------------------
  * The second polynomial p2 used for the pi BBP formula
  *
@@ -140,7 +140,7 @@ int pi_hex_p2(int k)
 }
 
 /*
- * Function:  pi_hex_p3 
+ * Function:  pi_hex_p3
  * --------------------
  * The third polynomial p3 used for the pi BBP formula
  *
@@ -154,7 +154,7 @@ int pi_hex_p3(int k)
 }
 
 /*
- * Function:  pi_hex_p4 
+ * Function:  pi_hex_p4
  * --------------------
  * The fourth polynomial p4 used for the pi BBP formula
  *

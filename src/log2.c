@@ -13,7 +13,7 @@
 #include "../include/aux.h"
 
 /*
- * Function:  log_2_binary 
+ * Function:  log_2_binary
  * --------------------
  * Computes the log(2) binary BBP formula.
  * It is the responsibility of the calling function to free the returned string.
@@ -34,7 +34,7 @@ char* log_2_binary(int d, int num_places)
 }
 
 /*
- * Function:  log_2_binary_p 
+ * Function:  log_2_binary_p
  * --------------------
  * The polynomial p used for the log(2) BBP formula
  *

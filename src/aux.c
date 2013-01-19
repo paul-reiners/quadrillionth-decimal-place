@@ -18,7 +18,7 @@
 #include "../include/aux.h"
 
 /*
- * Function:  modular_pow 
+ * Function:  modular_pow
  * --------------------
  * Computes modular exponentiation in an efficient and precise manner.
  *
@@ -64,13 +64,13 @@ unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, u
 /*
  * Function:  calculate_machine_epsilon
  * --------------------
- * Calculates the smallest floating-point difference possible on the machine 
+ * Calculates the smallest floating-point difference possible on the machine
  * that the program is being run on.
  *
  * This code was not written by me.  It is from:
  *      http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_C
  *
- *  returns: the smallest floating-point difference that can be represented on 
+ *  returns: the smallest floating-point difference that can be represented on
  *  the machine the program is running on
  */
 long double calculate_machine_epsilon(void)
@@ -89,9 +89,9 @@ long double calculate_machine_epsilon(void)
 }
 
 /*
- * Function:  mod_one 
+ * Function:  mod_one
  * --------------------
- * Drops the integer part of a real number.  Mathematicians use the term "mod 
+ * Drops the integer part of a real number.  Mathematicians use the term "mod
  * one", which is not the same as n % 1.
  *
  *  x: a real number
@@ -104,7 +104,7 @@ long double mod_one(long double x)
 }
 
 /*
- * Function:  get_int_part 
+ * Function:  get_int_part
  * --------------------
  * Returns the part of a number to the left of the decimal point.
  *
@@ -118,13 +118,13 @@ int get_int_part(long double x)
 }
 
 /*
- * Function:  convert_floating_decimal_to_hex 
+ * Function:  convert_floating_decimal_to_hex
  * --------------------
  * Converts a floating-point number to a hexadecimal representation.  The string
  * that is returned must be freed.
  *
  *  x: a floating-point number < 1.0
- *  places: the number of places to the right of the decimal point to represent 
+ *  places: the number of places to the right of the decimal point to represent
  *
  *  returns: a hexadecimal representation of x
  */
@@ -136,7 +136,7 @@ char* convert_floating_decimal_to_hex(long double x, int places)
 /*
  * Function:  convert_floating_decimal_to_base
  * --------------------
- * Converts a floating-point number to a representation in a specified base.  
+ * Converts a floating-point number to a representation in a specified base.
  * The string that is returned must be freed.
  *
  * Based on algorithm given in "Math Forum - Ask Dr. Math"
@@ -144,7 +144,7 @@ char* convert_floating_decimal_to_hex(long double x, int places)
  *
  *  x: a floating-point number < 1.0
  *  places: the number of places to the right of the decimal point to represent
- *  base: the base to be converted to 
+ *  base: the base to be converted to
  *
  *  returns: a representation of x in the specified base
  */
@@ -206,14 +206,17 @@ char* format_elapsed_time(int elapsed_seconds)
  *
  *  returns: true iff number_str represents an integer
  */
-bool is_integer(char* number_str) {
-    for (int i = 0; i < strlen(number_str); i++) {
+bool is_integer(char* number_str)
+{
+    for (int i = 0; i < strlen(number_str); i++)
+    {
         char c = number_str[i];
-        if (!('0' <= c && c <= '9')) {
+        if (!('0' <= c && c <= '9'))
+        {
             return false;
         }
     }
-    
+
     return true;
 }
 
