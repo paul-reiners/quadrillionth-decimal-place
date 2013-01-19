@@ -3,3 +3,7 @@ quadrillionth-decimal-place is a C implementation of a method of Bailey, Borwein
 
 This is a project for HarvardX CS50x.
 
+The user's manual is [here](./doc/documentation.html).
+
+The design documentation is [here](./doc/documentation.html).
+
