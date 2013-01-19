@@ -18,7 +18,7 @@
  * --------------------
  * Computes modular exponentiation in an efficient and precise manner.
  *
- * Basically a wrapper method for the GMP method mpz_set_ui.
+ * Basically a wrapper method for the GMP method mpz_powm.
  * Based on
  *      http://rosettacode.org/wiki/Modular_exponentiation#C
  *

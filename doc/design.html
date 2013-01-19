@@ -2,14 +2,219 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Title of the document</title>
+        <title>quadrillionth-decimal-place Design</title>
     </head>
     <body>
 
-        <h1>My First Heading</h1>
+        <h1>Overview</h1>
 
-        <p>My first paragraph.</p>
-
+        <p>
+            This project is a C implementation of the algorithm given in 
+            <a href="http://www.davidhbailey.com/dhbpapers/digits.pdf">
+            "On the Rapid Computation of Various Polylogarithmic Constants"</a> 
+            by <a href="http://www.davidhbailey.com/">David Bailey</a>, 
+            <a href="http://www.cecm.sfu.ca/~pborwein/">Peter Borwein</a>, and 
+            <a href="http://en.wikipedia.org/wiki/Simon_Plouffe">Simon Pflouffe</a>.
+            You might want to print out a copy of this paper to have next to you when reading the rest
+            of this document as I will refer to the equations in it.
+            The algorithm is commonly known as the <i>Bailey–Borwein–Plouffe (BBP) formula</i>.
+       </p>
+       <p>
+            The BBP formula allows you to calculate arbitrary digits (expressed in
+            a base <i>b</i>) of mathematical constants
+             that can be expressed in a particular form:
+            <dl>
+            <dd>
+                <img class="tex" alt="\alpha = \sum_{k = 0}^{\infty}\left[ \frac{1}{b^k} \frac{p(k)}{q(k)} \right]" 
+                     src="http://upload.wikimedia.org/math/7/5/c/75c6b64a7bfaed0d79f6c3f43aa84a64.png" />
+                </dd>
+            </dl>
+            <p>where α is the constant, <i>p</i> and <i>q</i> are polynomials in integer 
+            coefficients, and 
+            <i>b</i> ≥ 2 is an integer 
+            numerical base.  
+        </p>
+        <p>
+            I don't want to go into too much detail on the BBP formula,
+            but it suffices to say that  <i>&pi;</i>
+            and <i>log(2)</i> can be expressed as formulas of this type.
+        </p>
+        <p>
+            The amazing thing about the BBP formula is that it lets you compute an arbitrary digit
+            (in base <i>b</i> notation)
+            of such constants <i>without computing any of the preceding digits</i>.
+            Thus, for example, you can compute the millionth hexadecimal digit 
+            of pi without computing any of the preceding digits.  (Note that we compute  
+            <i>hexadecimal</i> digits because <i>b</i> in the BBP formula for <i>&pi;</i> is 16.)
+        </p>
+        <h1>Source code</h1>
+        <p>
+            I decided to write this project in C because I wanted it to be <i>fast</i>.
+            In fact, I needed the code to be fast, since, by its very nature, the algorithm is 
+            computation-intensive.
+        </p>
+        <p>
+            The project contains the following source files:
+        </p>
+        <ul>
+            <li>
+                project.c: Contains <i>main()</i> method for interaction with the user.  Lets the user 
+                           calculate specified digits of &pi; and <i>log(2)</i>.
+            </li>
+            <li>
+                bbp.c: Computes the generic BBP formula.
+            </li>
+            <li>
+                pi.c and log2.c: Implementations of the Bailey–Borwein–Plouffe (BBP) formula for &pi; in
+                hexadecimal and <i>log(2)</i> in binary.  
+            </li>
+            <li>
+                aux.c: Contains auxiliary routines that are not specific to the
+                       Bailey–Borwein–Plouffe formula. 
+            </li>
+        </ul>
+        <p>
+            The files are listed from the top down.  Each file may depend on files listed below, but not
+            on any files listed above it.
+        <p>
+        <p>
+            Particular formulas in the BBP paper are implemented by particular methods in my code:
+        </p>
+        <ul>
+            <li>
+                Equation (1.2) is implemented by the function <i>pi_hex</i> in pi.c.
+            </li>
+            <li>
+                Equation (3.4) is implemented by the function <i>compute_bbp</i> in bbp.c.
+            </li>
+            <li>
+                The unnumbered equation for <i>log(2)</i> on page 8 is implemented by the 
+                function <i>log_2_binary</i> in log2.c.
+            </li>
+        </ul>
+        <h1>Design decisions</h1>
+            <p>
+                My main design wish in this project was to create a program that would compile and
+                run on the CS50 Appliance as is.  That is, I did not want the user to have to 
+                install any libraries or do any other extra configuration on the CS50 Appliance in order 
+                to compile and run the project.
+            </p>
+            <p>
+                Unfortunately, I was not able to achieve this.  Part of the algorithm requires implementing
+                modular exponentiation in an efficient and precise manner.  The size of the exponents
+                can be 1,000,000 or more.  This is implemented in the <i>modular_pow</i> method in aux.c.  
+                As you can see, I ended up using the GNU GMP method <i>mpz_powm</i>.  I spent two or three
+                (or four) days
+                trying to write my own modular exponentiation routine without resorting to using
+                a library, but could not get the required precision (<i>absolute</i> precision
+                is actually the required precision).
+            </p>
+            <p>
+                I don't feel too bad about this, though.  As it says in the 
+                <a href="http://rosettacode.org/wiki/Modular_exponentiation#C">"Modular exponentiation"</a>
+                article on <i>Rosetta Code</i>, 
+                "Given numbers are too big for even 64 bit integers, so might as well take the lazy 
+                route and use GMP".
+            </p>
+            <p>
+                Another rather obvious design decision was to use as much precision as possible.
+                Never use an int where I could use an unsigned long long or a double where I could use an
+                unsigned long double. 
+            </p>
+        <h1>Testing</h1>
+        <p>
+            I wrote many, many test cases for this project.  They are in the test.c file in the test 
+            folder.
+            (This test code is not particularly well-documented or commented, but I'm not too worried 
+            about that.)
+            The paper 
+            <a href="http://crd-legacy.lbl.gov/~dhbailey/dhbpapers/bbp-alg.pdf">
+            "The BBP Algorithm for Pi"</a> by David H. Bailey gives the values
+            of many hexadecimal digits of &pi;.  I was able to use those values 
+            in my tests to verify the correctness
+            of my code.
+        </p>
+        <h1>Precision</h1>
+        <p>
+            My program is able to correctly calculate out to the one hundred millionth (100,000,000) 
+            hexadecimal place of &pi;.  I would like to have gotten out to the billionth digit.  However,
+            as David Bailey has said,
+        </p>
+            <blockquote>
+                The author has
+                found that on most systems using IEEE 64-bit floating-point arithmetic,
+                a straightforward implementation of the above scheme works properly so
+                long as <i>d</i> is less than approximately 1.18 × 10<sup>7</sup>.
+            </blockquote>
+            <p>
+                So getting out to 1.0 x 10<sup>8</sup> is pretty good.
+            </p>
+        <p>
+            It might be interesting to try using GNU GMP for all the numerical calculations and see 
+            how much more precision that would give me at the cost of what computation time.
+        </p>
+        <h1>Conclusion</h1>
+        <p>
+            I was inspired to do this project by reading the short story "The Center of the Universe"
+            in the book 
+            <a href="http://www.amazon.com/Reality-Conditions-Short-Mathematical-Fiction/dp/0883855526">
+            <i>Reality Conditions</i></a> by Alex Kasman.  Before that, I first learned about 
+            the BBP formula in the "What is the Quadrillionth Decimal Place of &pi;?" chapter
+            of 
+            <a href="http://www.amazon.com/Computer-Crucible-Introduction-Experimental-Mathematics/dp/1568813430">
+            <i>The Computer as Crucible</i></a> by Jonathan Borwein and Keith Devlin.  (That (obviously) 
+            is
+            also where I stole the title of my project from.)
+        <p>
+        <p>
+            Note that this is not the first implementation of the BBP formula (BBP implemented it 
+            themselves).
+            I suspect it has been implemented in C many times (or, at least, a few times).  However I 
+            haven't 
+            checked and I did not look at any other implementations.  My implementation was done simply 
+            to educate 
+            myself.
+        </p>
+        <p>
+            And I did learn a lot in doing this project.  First, I got a lot more experience in C.
+            Second, I learned about an interesting mathematical concept, the Bailey–Borwein–Plouffe formula.
+            Third, I learned some interesting tips and tricks for implementing
+            high-precision mathematical algorithms.
+        </p>
+        <h1>References</h1>
+        <ul>
+            <li>
+                "The Center of the Universe"
+                in the book 
+                <a href="http://www.amazon.com/Reality-Conditions-Short-Mathematical-Fiction/dp/0883855526">
+                <i>Reality Conditions</i></a> by <a href="http://kasmana.people.cofc.edu/">Alex Kasman</a>
+            </li>
+            <li>
+                <a href="http://www.davidhbailey.com/dhbpapers/digits.pdf">
+                    "On the Rapid Computation of Various Polylogarithmic Constants"</a> 
+                    by <a href="http://www.davidhbailey.com/">David Bailey</a>, 
+                    <a href="http://www.cecm.sfu.ca/~pborwein/">Peter Borwein</a>, and 
+                    <a href="http://en.wikipedia.org/wiki/Simon_Plouffe">Simon Pflouffe</a>
+            </li>
+            <li>
+                <a href="http://en.wikipedia.org/wiki/BBP_algorithm">"Bailey–Borwein–Plouffe formula"</a> 
+                article in <i>Wikipedia</i>
+            </li>
+            <li>
+                <a href="http://rosettacode.org/wiki/Modular_exponentiation#C">""Modular exponentiation"</a>
+                article on <i>Rosetta Code</i>
+            </li>
+            <li>
+                <a href="http://crd-legacy.lbl.gov/~dhbailey/dhbpapers/bbp-alg.pdf">
+            "The BBP Algorithm for Pi"</a> by David H. Bailey
+            </li>
+            <li>
+                "What is the Quadrillionth Decimal Place of &pi;?" chapter
+                of 
+                <a href="http://www.amazon.com/Computer-Crucible-Introduction-Experimental-Mathematics/dp/1568813430">
+                <i>The Computer as Crucible</i></a> by Jonathan Borwein and Keith Devlin
+                </li>
+        </ul>
     </body>
 </html>
 

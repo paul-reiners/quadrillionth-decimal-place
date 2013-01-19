@@ -6,12 +6,12 @@
  *
  * Final Project
  *
- * An implementation of the Bailey–Borwein–Plouffe (BBP) formula in C.
+ * Contains main() method for interaction with the user.  Lets the user 
+ * calculate specified digits of pi and log(2).
  ***************************************************************************/
 
 #define _XOPEN_SOURCE
 #define PLACES 8
-
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
