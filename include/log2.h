@@ -1,3 +1,13 @@
+/****************************************************************************
+ * log2.h
+ *
+ * Computer Science 50x
+ * Paul Reiners
+ *
+ * An implementation of the Bailey–Borwein–Plouffe (BBP) formula for log(2) 
+ * in binary.
+ ***************************************************************************/
+
 #ifndef LOG2_H
 #define LOG2_H
 
