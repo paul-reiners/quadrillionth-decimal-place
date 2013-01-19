@@ -1,3 +1,13 @@
+/****************************************************************************
+ * pi.h
+ *
+ * Computer Science 50x
+ * Paul Reiners
+ *
+ * An implementation of the Bailey–Borwein–Plouffe (BBP) formula for pi in 
+ * hexadecimal.
+ ***************************************************************************/
+ 
 #ifndef PI_H
 #define PI_H
 
