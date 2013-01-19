@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>quadrillionth-decimal-place User Documentation</title>
+    </head>
+    <body>
+
+        <h1>Compilation</h1>
+
+        <p>
+        To compile my project, you need to first install the 
+        <a href="http://gmplib.org/">GNU MP Bignum Library (GNU GMP)</a>.  On the CS50 Appliance,
+        that is quite easy.  Simply type the following in the Terminal:
+        <pre>
+    sudo yum install gmp-devel</pre>
+        <p>After GNU GMP is installed, simply type <i>make</i> in the Terminal in the project's 
+        top-level directory (the one containing the Makefile).
+        </p>
+        
+        <h1>Configuration</h1>
+
+        <p>Other than installing GNU GMP, which you've already done, no special configuration is needed.</p>
+
+        <h1>Use</h1>
+
+        <p>Here is the usage string for my project:</p>
+        <pre>
+    project [-t] [-n number_code] d</pre>
+        <p>
+            <i>d</i> is the only required argument.  This specifies the position of the first digit to the right
+            of the decimal place that you want to compute.
+        </p>
+        <p>
+            <i>number_code</i> is an optional argument and has two valid values:
+        </p>
+            <ul>
+                <li><i>pi</i> for computing hexadecimal digits of pi.</li>
+                <li><i>log2</i> for computing binary digits of log(2).</li>
+            </ul>
+        <p>
+            The default value for <i>number_code</i> is <i>pi</i>.
+        </p>
+        <p>
+            <i>t</i> is an optional flag.  If set, the program reports how long the computation took.
+        </p>
+        <h2>Examples</h2>
+        <p>Let's compute the millionth hexadecimal digit of pi:</p>
+        <pre>
+    jharvard@appliance (~/Dropbox/project/quadrillionth-decimal-place): ./project -n pi 1000000
+    Hex digits of pi beginning at position 1000000: 26C65E52</pre>
+        
+        <p>
+        Since the default value of <i>n</i> is <i>pi</i>, there is a shorter, equivalent invocation:
+        </p>
+        <pre>
+    jharvard@appliance (~/Dropbox/project/quadrillionth-decimal-place): ./project 1000000
+    Hex digits of pi beginning at position 1000000: 26C65E52</pre>
+        <p>Now, using the <i>t</i> flag, let's see how long it takes our program to compute the 
+        millionth digit of pi:
+        </p>
+        <pre>
+    jharvard@appliance (~/Dropbox/project/quadrillionth-decimal-place): ./project -t 1000000
+    Hex digits of pi beginning at position 1000000: 26C65E52
+        Time to compute = 00:00:11.</pre>
+        <p>
+            11 seconds!  Pretty darn fast!!
+        </p>
+        <p>
+        Finally, let's compute the millionth binary digit of log(2):
+        </p>
+        <pre>
+    jharvard@appliance (~/Dropbox/project/quadrillionth-decimal-place): ./project -t -n log2 1000000
+    Binary digits of log(2) beginning at position 1000000: 11010100
+        Time to compute = 00:00:02.</pre>
+
+    </body>
+</html>
+

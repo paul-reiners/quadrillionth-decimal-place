@@ -27,7 +27,7 @@
 
 int main(int argc, char* argv[])
 {
-    char* usage = "Usage: project [-t] [-n number_code] first_digit";
+    char* usage = "Usage: project [-t] [-n number_code] d";
     if (argc == 1 || (argc == 2 && strcmp(argv[1], "-h") == 0))
     {
         printf("%s\n", usage);
