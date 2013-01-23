@@ -13,23 +13,6 @@
 #include <stdbool.h>
 
 /*
- * Function:  compute_bbp_first_sum 
- * --------------------
- * Computes the first summand in the BBP formula.
- *
- *  d: digit to be calculated
- *  base: the base
- *  c: a fixed positive integer
- *  p: a simple polynomial like x or x^2
- *  start_at_0: start the summation at k=0, if true, at k=1, otherwise.  Most 
- *              instances of the BBP formula, such as pi, have you start at 0.  
- *              But some, such as log(2), have you start at 1.
- *
- *  returns: the value of the first sum
- */
-long double compute_bbp_first_sum(int d, int base, int c, int (*p)(int), bool start_at_0);
-
-/*
  * Function:  compute_bbp_first_sum_gmp 
  * --------------------
  * Computes the first summand in the BBP formula using GNU GMP.
@@ -47,7 +30,7 @@ long double compute_bbp_first_sum(int d, int base, int c, int (*p)(int), bool st
 long double compute_bbp_first_sum_gmp(int d, int base, int c, int (*p)(int), bool start_at_0);
 
 /*
- * Function:  compute_bbp_second_sum 
+ * Function:  compute_bbp_second_sum_gmp 
  * --------------------
  * Computes the second summand in the BBP formula.
  *
@@ -58,7 +41,7 @@ long double compute_bbp_first_sum_gmp(int d, int base, int c, int (*p)(int), boo
  *
  *  returns: the value of the second sum
  */
-long double compute_bbp_second_sum(int d, int base, int c, int (*p)(int));
+long double compute_bbp_second_sum_gmp(int d, int base, int c, int (*p)(int));
 
 /*
  * Function:  compute_bbp 

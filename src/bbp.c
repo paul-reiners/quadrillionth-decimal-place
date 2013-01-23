@@ -30,7 +30,7 @@ long double compute_bbp(int digit, int base, int c, int (*p)(int), bool start_at
     long double sum
         = mod_one(
                 compute_bbp_first_sum_gmp(d, base, c, p, start_at_0)
-                + compute_bbp_second_sum(d, base, c, p));
+                + compute_bbp_second_sum_gmp(d, base, c, p));
 
     return sum;
 }
@@ -91,7 +91,7 @@ long double compute_bbp_first_sum_gmp(int d, int base, int c, int (*p)(int), boo
 }
 
 /*
- * Function:  compute_bbp_second_sum
+ * Function:  compute_bbp_second_sum_gmp 
  * --------------------
  * Computes the second summand in the BBP formula.
  *
@@ -102,24 +102,49 @@ long double compute_bbp_first_sum_gmp(int d, int base, int c, int (*p)(int), boo
  *
  *  returns: the value of the second sum
  */
-long double compute_bbp_second_sum(int d, int base, int c, int (*p)(int))
+long double compute_bbp_second_sum_gmp(int d, int base, int c, int (*p)(int)) 
 {
-    long double sum = 0.0;
+    mpf_t sum;
+    mpf_init(sum);
+    mpf_set_d(sum, 0.0);
+
     int k = floor(d / c) + 1;
-    long double prev_sum = sum;
-    long double machEps = calculate_machine_epsilon();
+
+    mpf_t prev_sum;
+    mpf_init(prev_sum);
+    mpf_set(prev_sum, sum);
+    
+    mpf_t base_gmp;
+    mpf_init(base_gmp);
+    mpf_set_si(base_gmp, base);
+
     do
     {
-        prev_sum = sum;
+        mpf_set(prev_sum, sum);
         int poly_result = (*p)(k);
-        long double num = pow(base, d - c * k);
-        int denom = poly_result;
-        sum += num / (long double) denom;
+
+        mpf_t num;
+        mpf_init(num);
+        mpf_pow_ui(num, base_gmp, d - c * k);
+        
+        unsigned long int denom = poly_result;
+        
+        mpf_t quotient;
+        mpf_init(quotient);
+        mpf_div_ui(quotient, num, denom);        
+        mpf_clear(num);
+        
+        mpf_add(sum, sum, quotient);
+        mpf_clear(quotient);
 
         k++;
     }
-    while (fabs(sum - prev_sum) > machEps);
+    while (mpf_cmp(prev_sum, sum) != 0);
 
-    return sum;
+    double result = mpf_get_d(sum);
+
+    mpf_clear(sum);
+
+    return result;
 }
 

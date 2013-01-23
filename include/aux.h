@@ -87,20 +87,6 @@ char* convert_floating_decimal_to_hex(long double x, int places);
 char* convert_floating_decimal_to_base(long double x, int places, int base);
 
 /*
- * Function:  calculate_machine_epsilon
- * --------------------
- * Calculates the smallest floating-point difference possible on the machine 
- * that the program is being run on.
- *
- * This code was not written by me.  It is from:
- *      http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_C
- *
- *  returns: the smallest floating-point difference that can be represented on 
- *  the machine the program is running on
- */
-long double calculate_machine_epsilon(void);
-
-/*
  * Function:  format_elapsed_time
  * --------------------
  * Formats seconds as HH:MM:SS.
