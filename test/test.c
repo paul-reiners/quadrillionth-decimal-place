@@ -212,12 +212,16 @@ int test_iexp(void)
     int x = 10;
     unsigned n = 999;
     unsigned k = 257;
-    int expected =  96;
-    int actual = modular_pow(x, n, k);
+    unsigned long int expected =  96;
+    mpz_t rop;
+    mpz_init(rop);
+    modular_pow_gmp(rop, x, n, k);
+    unsigned long int actual = mpz_get_ui(rop);
+    mpz_clear(rop);
     if (expected != actual)
     {
         printf("test_iexp failed.\n");
-        printf("\texpected: %d; actual: %d.\n", expected, actual);
+        printf("\texpected: %lu; actual: %lu.\n", expected, actual);
 
         error_count++;
     }
@@ -226,11 +230,14 @@ int test_iexp(void)
     n = 13;
     k = 497;
     expected =  445;
-    actual = modular_pow(x, n, k);
+    mpz_init(rop);
+    modular_pow_gmp(rop, x, n, k);
+    actual = mpz_get_ui(rop);
+    mpz_clear(rop);
     if (expected != actual)
     {
         printf("test_iexp failed.\n");
-        printf("\texpected: %d; actual: %d.\n", expected, actual);
+        printf("\texpected: %lu; actual: %lu.\n", expected, actual);
 
         error_count++;
     }

@@ -18,7 +18,7 @@
 #include "../include/aux.h"
 
 /*
- * Function:  modular_pow
+ * Function:  modular_pow_gmp 
  * --------------------
  * Computes modular exponentiation in an efficient and precise manner.
  *
@@ -32,11 +32,8 @@
  *
  *  returns: (b ^ exponent) % modulus
  */
-unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, unsigned long int modulus)
+void modular_pow_gmp(mpz_t rop, unsigned long int b, unsigned long int exponent, unsigned long int modulus)
 {
-    mpz_t rop;
-    mpz_init(rop);
-
     mpz_t base;
     mpz_init(base);
     mpz_set_ui(base, b);
@@ -51,14 +48,9 @@ unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, u
 
     mpz_powm(rop, base, exp, mod);
 
-    unsigned long int result = mpz_get_ui(rop);
-
     mpz_clear(exp);
     mpz_clear(base);
     mpz_clear(mod);
-    mpz_clear(rop);
-
-    return result;
 }
 
 /*
@@ -101,6 +93,26 @@ long double calculate_machine_epsilon(void)
 long double mod_one(long double x)
 {
     return x - floor(x);
+}
+
+/*
+ * Function:  mod_one_gmp 
+ * --------------------
+ * Drops the integer part of a real number.  Mathematicians use the term "mod 
+ * one", which is not the same as n % 1.
+ *
+ *  x: a real number
+ *
+ *  returns: the fractional part of x
+ */
+void mod_one_gmp(mpf_t rop, mpf_t x) {
+    mpf_t floor;
+    mpf_init(floor);
+    mpf_floor(floor, x);
+    
+    mpf_sub(rop, x, floor);
+    
+    mpf_clear(floor);
 }
 
 /*

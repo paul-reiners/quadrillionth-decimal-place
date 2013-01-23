@@ -13,8 +13,10 @@
 
 #include<stdbool.h>
 
+#include <gmp.h>
+
 /*
- * Function:  modular_pow 
+ * Function:  modular_pow_gmp 
  * --------------------
  * Computes modular exponentiation in an efficient and precise manner.
  *
@@ -28,7 +30,7 @@
  *
  *  returns: (b ^ exponent) % modulus
  */
-unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, unsigned long int modulus);
+void modular_pow_gmp(mpz_t rop, unsigned long int b, unsigned long int exponent, unsigned long int modulus);
 
 /*
  * Function:  mod_one 
@@ -41,6 +43,18 @@ unsigned long int modular_pow(unsigned long int b, unsigned long int exponent, u
  *  returns: the fractional part of x
  */
 long double mod_one(long double x);
+
+/*
+ * Function:  mod_one_gmp 
+ * --------------------
+ * Drops the integer part of a real number.  Mathematicians use the term "mod 
+ * one", which is not the same as n % 1.
+ *
+ *  x: a real number
+ *
+ *  returns: the fractional part of x
+ */
+void mod_one_gmp(mpf_t rop, mpf_t x);
 
 /*
  * Function:  convert_floating_decimal_to_hex 
