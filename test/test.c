@@ -21,8 +21,12 @@ int test(void)
     fail_count += test_pi_hex_0_8();
     fail_count += test_pi_hex_1_8();
     fail_count += test_pi_hex_2_8();
+
     fail_count += test_compute_pi_sum1();
     fail_count += test_compute_pi_sum2();
+    fail_count += test_compute_pi_sum3();
+    fail_count += test_compute_pi_sum4();
+
     fail_count += test_pi_hex_10_n();
     printf("\n");
 
@@ -32,8 +36,9 @@ int test(void)
 int test_compute_pi_sum1(void)
 {
     long double actual = compute_pi_sum1(1000000 + 1);
-    long double expected  = 0.18103953;
-    long double tolerance = 0.00000001;
+    // long double expected  = 0.181039533;
+    long double expected  = 0.181039533801436067853489346252;
+    long double tolerance = 0.000000000000000000000000000001;
     long double delta = fabs(actual - expected);
     if (delta <= tolerance)
     {
@@ -44,8 +49,9 @@ int test_compute_pi_sum1(void)
     else
     {
         printf("test_compute_pi_sum1 failed\n");
-        printf("\texpected: %Lf; actual: %Lf.\n", expected, actual);
-        printf("\tdifference was: %Lf.\n", delta);
+        printf("\texpected:   %.30Lf.\n", expected);
+        printf("\tactual:     %.30Lf.\n", actual);
+        printf("\tdifference: %.30Lf.\n", delta);
 
         return 1;
     }
@@ -54,9 +60,11 @@ int test_compute_pi_sum1(void)
 int test_compute_pi_sum2(void)
 {
     long double actual = compute_pi_sum2(1000000 + 1);
-    long double expected  = 0.77606554;
-    long double tolerance = 0.00000001;
-    if (fabs(actual - expected) <= tolerance)
+    // long double expected  = 0.776065549;
+    long double expected  = 0.776065549807807461372297594382;
+    long double tolerance = 0.000000000000000000000000000001;
+    long double delta = fabs(actual - expected);
+    if (delta <= tolerance)
     {
         printf("test_compute_pi_sum2 passed\n");
 
@@ -65,7 +73,55 @@ int test_compute_pi_sum2(void)
     else
     {
         printf("test_compute_pi_sum2 failed\n");
-        printf("\texpected: \"%Lf\"; actual: \"%Lf\".\n", expected, actual);
+        printf("\texpected:   %.30Lf.\n", expected);
+        printf("\tactual:     %.30Lf.\n", actual);
+        printf("\tdifference: %.30Lf.\n", delta);
+
+        return 1;
+    }
+}
+
+int test_compute_pi_sum3(void)
+{
+    long double actual = compute_pi_sum3(1000000 + 1);
+    long double expected  = 0.362458564070574142068334335591;
+    long double tolerance = 0.000000000000000000000000000001;
+    long double delta = fabs(actual - expected);
+    if (delta <= tolerance)
+    {
+        printf("test_compute_pi_sum3 passed\n");
+
+        return 0;
+    }
+    else
+    {
+        printf("test_compute_pi_sum3 failed\n");
+        printf("\texpected:   %.30Lf.\n", expected);
+        printf("\tactual:     %.30Lf.\n", actual);
+        printf("\tdifference: %.30Lf.\n", delta);
+
+        return 1;
+    }
+}
+
+int test_compute_pi_sum4(void)
+{
+    long double actual = compute_pi_sum4(1000000 + 1);
+    long double expected  = 0.386138673952014848001215186544;
+    long double tolerance = 0.000000000000000000000000000001;
+    long double delta = fabs(actual - expected);
+    if (delta <= tolerance)
+    {
+        printf("test_compute_pi_sum4 passed\n");
+
+        return 0;
+    }
+    else
+    {
+        printf("test_compute_pi_sum4 failed\n");
+        printf("\texpected:   %.30Lf.\n", expected);
+        printf("\tactual:     %.30Lf.\n", actual);
+        printf("\tdifference: %.30Lf.\n", delta);
 
         return 1;
     }
@@ -111,21 +167,22 @@ int test_pi_hex_0_8(void)
 
 int test_pi_hex_10_n(void)
 {
-    char* expecteds[] = { "26C65E52CB459", "17AF5863EFED", "ECB840E2192" };
-    int ns[] =  { 1000000, 10000000, 100000000 };
+    char* expecteds[] = 
+        { "26C65E52CB459", "17AF5863EFED", "ECB840E2192", "85895585A0428B" };
+    long ns[] =  { 1000000,       10000000,     100000000,      1000000000 };
     int error_count = 0;
     for (int i = 0; i < sizeof(ns) / sizeof(int); i++)
     {
         char* expected = expecteds[i];
         int places = strlen(expected);
-        int n = ns[i];
+        long n = ns[i];
         error_count += test_pi_hex_n_places(expected, n, places);
     }
 
     return error_count;
 }
 
-int test_pi_hex_n_places(char* expected, int n, int places)
+int test_pi_hex_n_places(char* expected, long n, int places)
 {
     time_t t1, t2;
     (void) time(&t1);
@@ -135,7 +192,7 @@ int test_pi_hex_n_places(char* expected, int n, int places)
     int ret_val;
     if (strcmp(expected, actual) == 0)
     {
-        printf("test_pi_hex_n_places(%d, %d) succeeded.\n", n, places);
+        printf("test_pi_hex_n_places(%ld, %d) succeeded.\n", n, places);
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
 
         int seconds = (int)(t2 - t1);
@@ -147,7 +204,7 @@ int test_pi_hex_n_places(char* expected, int n, int places)
     }
     else
     {
-        printf("test_pi_hex_n_places(%d, %d) failed.\n", n, places);
+        printf("test_pi_hex_n_places(%ld, %d) failed.\n", n, places);
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
 
         ret_val = 1;

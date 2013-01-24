@@ -58,4 +58,3 @@ long double compute_bbp_second_sum_gmp(int d, int base, int c, int (*p)(int));
 long double compute_bbp(int digit, int base, int c, int (*p)(int), bool start_at_0);
 
 #endif // BBP_H
-

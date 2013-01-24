@@ -70,6 +70,10 @@ int main(int argc, char* argv[])
                 abort();
         }
 
+    mpf_set_default_prec(128);
+    mp_bitcnt_t default_float_prec = mpf_get_default_prec();
+    printf("Default float precision is %lu bits.\n", default_float_prec);
+    
     if (uflag)
     {
         int result = test();
