@@ -24,7 +24,7 @@
  *
  *  returns: the value of the BBP formula
  */
-long double compute_bbp(int digit, int base, int c, int (*p)(int), bool start_at_0)
+long double compute_bbp(int digit, int base, int c, long long int (*p)(long long int), bool start_at_0)
 {
     int d = digit - 1;
     long double sum
@@ -50,13 +50,13 @@ long double compute_bbp(int digit, int base, int c, int (*p)(int), bool start_at
  *
  *  returns: the value of the first sum
  */
-long double compute_bbp_first_sum_gmp(int d, int base, int c, int (*p)(int), bool start_at_0) {
+long double compute_bbp_first_sum_gmp(int d, int base, int c, long long int (*p)(long long int), bool start_at_0) {
     mpf_t sum;
     mpf_init(sum);
     mpf_set_d(sum, 0.0);
     
     int k_start = start_at_0 ? 0 : 1;
-    for (int k = k_start; k <= floor(d / c); k++)
+    for (long long int k = k_start; k <= floor(d / c); k++)
     {
         int poly_result = (*p)(k);
         
@@ -102,13 +102,13 @@ long double compute_bbp_first_sum_gmp(int d, int base, int c, int (*p)(int), boo
  *
  *  returns: the value of the second sum
  */
-long double compute_bbp_second_sum_gmp(int d, int base, int c, int (*p)(int)) 
+long double compute_bbp_second_sum_gmp(int d, int base, int c, long long int (*p)(long long int)) 
 {
     mpf_t sum;
     mpf_init(sum);
     mpf_set_d(sum, 0.0);
 
-    int k = floor(d / c) + 1;
+    long long int k = floor(d / c) + 1;
 
     mpf_t prev_sum;
     mpf_init(prev_sum);

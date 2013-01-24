@@ -33,7 +33,7 @@ char* pi_hex(int d, int num_places);
  *
  *  returns: p1(k)
  */
-int pi_hex_p1(int k);
+long long int pi_hex_p1(long long int k);
 
 /*
  * Function:  pi_hex_p2 
@@ -44,7 +44,7 @@ int pi_hex_p1(int k);
  *
  *  returns: p2(k)
  */
-int pi_hex_p2(int k);
+long long int pi_hex_p2(long long int k);
 
 /*
  * Function:  pi_hex_p3 
@@ -55,7 +55,7 @@ int pi_hex_p2(int k);
  *
  *  returns: p3(k)
  */
-int pi_hex_p3(int k);
+long long int pi_hex_p3(long long int k);
 
 /*
  * Function:  pi_hex_p4 
@@ -66,7 +66,7 @@ int pi_hex_p3(int k);
  *
  *  returns: p4(k)
  */
-int pi_hex_p4(int k);
+long long int pi_hex_p4(long long int k);
 
 /*
  * Function:  compute_pi_sum1 

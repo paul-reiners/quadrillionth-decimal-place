@@ -48,7 +48,7 @@ long double compute_pi_sum1(int d)
 {
     int base = 16;
     int c = 1;
-    int (*p)(int) = &pi_hex_p1;
+    long long int (*p)(long long int) = &pi_hex_p1;
     long double result = compute_bbp(d, base, c, p, true);
 
     return result;
@@ -67,7 +67,7 @@ long double compute_pi_sum2(int d)
 {
     int base = 16;
     int c = 1;
-    int (*p)(int) = &pi_hex_p2;
+    long long int (*p)(long long int) = &pi_hex_p2;
     long double result = compute_bbp(d, base, c, p, true);
 
     return result;
@@ -86,7 +86,7 @@ long double compute_pi_sum3(int d)
 {
     int base = 16;
     int c = 1;
-    int (*p)(int) = &pi_hex_p3;
+    long long int (*p)(long long int) = &pi_hex_p3;
     long double result = compute_bbp(d, base, c, p, true);
 
     return result;
@@ -105,7 +105,7 @@ long double compute_pi_sum4(int d)
 {
     int base = 16;
     int c = 1;
-    int (*p)(int) = &pi_hex_p4;
+    long long int (*p)(long long int) = &pi_hex_p4;
     long double result = compute_bbp(d, base, c, p, true);
 
     return result;
@@ -120,7 +120,7 @@ long double compute_pi_sum4(int d)
  *
  *  returns: p1(k)
  */
-int pi_hex_p1(int k)
+long long int pi_hex_p1(long long int k)
 {
     return 8 * k + 1;
 }
@@ -134,7 +134,7 @@ int pi_hex_p1(int k)
  *
  *  returns: p2(k)
  */
-int pi_hex_p2(int k)
+long long int pi_hex_p2(long long int k)
 {
     return 8 * k + 4;
 }
@@ -148,7 +148,7 @@ int pi_hex_p2(int k)
  *
  *  returns: p3(k)
  */
-int pi_hex_p3(int k)
+long long int pi_hex_p3(long long int k)
 {
     return 8 * k + 5;
 }
@@ -162,7 +162,7 @@ int pi_hex_p3(int k)
  *
  *  returns: p4(k)
  */
-int pi_hex_p4(int k)
+long long int pi_hex_p4(long long int k)
 {
     return 8 * k + 6;
 }

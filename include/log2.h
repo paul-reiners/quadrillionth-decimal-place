@@ -33,7 +33,7 @@ char* log_2_binary(int d, int num_places);
  *
  *  returns: p(k)
  */
-int log_2_binary_p(int k);
+long long int log_2_binary_p(long long int k);
 
 #endif // LOG2_H
 
