@@ -30,7 +30,7 @@
  *
  *  returns: (b ^ exponent) % modulus
  */
-void modular_pow_gmp(mpz_t rop, unsigned long int b, unsigned long int exponent, unsigned long int modulus);
+void modular_pow_gmp(mpz_t rop, unsigned long long int b, unsigned long long int exponent, unsigned long long int modulus);
 
 /*
  * Function:  mod_one 

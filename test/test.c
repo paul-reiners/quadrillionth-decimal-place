@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <time.h>
 
+#include <check.h>
+
 #include "test.h"
 #include "../include/aux.h"
 #include "../include/bbp.h"
@@ -33,98 +35,80 @@ int test(void)
     return fail_count;
 }
 
-int test_compute_pi_sum1(void)
+int test_compute_pi_sum(long double (*pt2_compute_pi_sum)(int), long double expected, long double tolerance)
 {
-    long double actual = compute_pi_sum1(1000000 + 1);
-    // long double expected  = 0.181039533;
-    long double expected  = 0.181039533801436067853489346252;
-    long double tolerance = 0.000000000000000000000000000001;
+    long double actual = (*pt2_compute_pi_sum)(1000000 + 1);
     long double delta = fabs(actual - expected);
     if (delta <= tolerance)
     {
-        printf("test_compute_pi_sum1 passed\n");
+        printf("test_compute_pi_sum passed\n");
 
         return 0;
     }
     else
     {
-        printf("test_compute_pi_sum1 failed\n");
+        printf("test_compute_pi_sum failed\n");
         printf("\texpected:   %.30Lf.\n", expected);
         printf("\tactual:     %.30Lf.\n", actual);
         printf("\tdifference: %.30Lf.\n", delta);
 
         return 1;
     }
+}
+
+int test_compute_pi_sum1(void) {
+    // Extended value =     0.181039533801436041475746256679
+    long double expected  = 0.1810395338014360;
+    long double tolerance = 0.0000000000000001;
+    int result = test_compute_pi_sum(&compute_pi_sum1, expected, tolerance);
+    if (result > 0)
+    {
+        printf("test_compute_pi_sum1 failed\n");
+    }
+    
+    return result;
 }
 
 int test_compute_pi_sum2(void)
 {
-    long double actual = compute_pi_sum2(1000000 + 1);
-    // long double expected  = 0.776065549;
-    long double expected  = 0.776065549807807461372297594382;
-    long double tolerance = 0.000000000000000000000000000001;
-    long double delta = fabs(actual - expected);
-    if (delta <= tolerance)
-    {
-        printf("test_compute_pi_sum2 passed\n");
-
-        return 0;
-    }
-    else
+    // Extended value =     0.776065549807807508742030222493
+    long double expected  = 0.776065549807807;
+    long double tolerance = 0.000000000000001;
+    int result = test_compute_pi_sum(&compute_pi_sum2, expected, tolerance);
+    if (result > 0)
     {
         printf("test_compute_pi_sum2 failed\n");
-        printf("\texpected:   %.30Lf.\n", expected);
-        printf("\tactual:     %.30Lf.\n", actual);
-        printf("\tdifference: %.30Lf.\n", delta);
-
-        return 1;
     }
+    
+    return result;
 }
 
 int test_compute_pi_sum3(void)
 {
-    long double actual = compute_pi_sum3(1000000 + 1);
-    long double expected  = 0.362458564070574142068334335591;
-    long double tolerance = 0.000000000000000000000000000001;
-    long double delta = fabs(actual - expected);
-    if (delta <= tolerance)
-    {
-        printf("test_compute_pi_sum3 passed\n");
-
-        return 0;
-    }
-    else
+    // Extended value =     0.362458564070574140725256029327
+    long double expected  = 0.3624585640705741;
+    long double tolerance = 0.0000000000000001;
+    int result = test_compute_pi_sum(&compute_pi_sum3, expected, tolerance);
+    if (result > 0)
     {
         printf("test_compute_pi_sum3 failed\n");
-        printf("\texpected:   %.30Lf.\n", expected);
-        printf("\tactual:     %.30Lf.\n", actual);
-        printf("\tdifference: %.30Lf.\n", delta);
-
-        return 1;
     }
+    
+    return result;
 }
 
 int test_compute_pi_sum4(void)
 {
-    long double actual = compute_pi_sum4(1000000 + 1);
-    long double expected  = 0.386138673952014848001215186544;
-    long double tolerance = 0.000000000000000000000000000001;
-    long double delta = fabs(actual - expected);
-    if (delta <= tolerance)
-    {
-        printf("test_compute_pi_sum4 passed\n");
-
-        return 0;
-    }
-    else
+    // Extended value =     0.386138673952014843671065591479
+    long double expected  = 0.38613867395201484;
+    long double tolerance = 0.00000000000000001;
+    int result = test_compute_pi_sum(&compute_pi_sum4, expected, tolerance);
+    if (result > 0)
     {
         printf("test_compute_pi_sum4 failed\n");
-        printf("\texpected:   %.30Lf.\n", expected);
-        printf("\tactual:     %.30Lf.\n", actual);
-        printf("\tdifference: %.30Lf.\n", delta);
-
-        return 1;
     }
+    
+    return result;
 }
 
 int test_log_2_binary(void)
@@ -168,8 +152,8 @@ int test_pi_hex_0_8(void)
 int test_pi_hex_10_n(void)
 {
     char* expecteds[] = 
-        { "26C65E52CB459", "17AF5863EFED", "ECB840E2192", "85895585A0428B" };
-    long ns[] =  { 1000000,       10000000,     100000000,      1000000000 };
+        { "26C65E52CB459", "17AF5863EFED", "ECB840E2192", /* "85895585A0428B" */ };
+    long ns[] =  { 1000000,       10000000,     100000000,      /* 1000000000 */ };
     int error_count = 0;
     for (int i = 0; i < sizeof(ns) / sizeof(int); i++)
     {
