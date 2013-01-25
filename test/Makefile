@@ -21,7 +21,7 @@ HDRS = ../include/aux.h ../include/bbp.h ../include/pi.h ../include/log2.h test.
 
 # space-separated list of libraries, if any,
 # each of which should be prefixed with -l
-LIBS = -lm -lgmp
+LIBS = -lm -lgmp -lcheck
 
 # space-separated list of source files
 SRCS = ../src/aux.c ../src/bbp.c ../src/pi.c ../src/log2.c ../test/test.c

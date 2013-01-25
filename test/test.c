@@ -13,29 +13,102 @@
 #include "../include/pi.h"
 #include "../include/log2.h"
 
+void
+setup (void)
+{
+}
+
+void
+teardown (void)
+{
+}
+
+START_TEST (test_iexp)
+{
+    int x = 10;
+    unsigned n = 999;
+    unsigned k = 257;
+    unsigned long int expected =  96;
+    mpz_t rop;
+    mpz_init(rop);
+    modular_pow_gmp(rop, x, n, k);
+    unsigned long int actual = mpz_get_ui(rop);
+    mpz_clear(rop);
+
+    char errMsg[100];
+    sprintf(errMsg, "\texpected: %lu; actual: %lu.\n", expected, actual);
+    fail_unless(expected == actual, errMsg);
+
+    x = 4;
+    n = 13;
+    k = 497;
+    expected =  445;
+    mpz_init(rop);
+    modular_pow_gmp(rop, x, n, k);
+    actual = mpz_get_ui(rop);
+    mpz_clear(rop);
+    sprintf(errMsg, "\texpected: %lu; actual: %lu.\n", expected, actual);
+    fail_unless(expected == actual, errMsg);
+}
+END_TEST
+
+START_TEST (test_convert_floating_decimal_to_hex)
+{
+    char* expected  = "1C71C71C7";
+    char* actual = convert_floating_decimal_to_hex(1.0 / 9.0, 9);
+    
+    char err_msg[100];
+    sprintf(err_msg, "\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
+    fail_unless(strcmp(expected, actual) == 0, err_msg);
+
+    free(actual);
+}
+END_TEST
+
+START_TEST (test_convert_log_of_2_to_binary)
+{
+    // log(2) base 2 = 0.101100010111...
+    char* expected  = "101100010111";
+    char* actual = convert_floating_decimal_to_base(log(2.0), 12, 2);
+
+    char err_msg[100];
+    sprintf(err_msg, "\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
+    fail_unless(strcmp(expected, actual) == 0, err_msg);
+
+    free(actual);
+}
+END_TEST
+
+Suite *
+my_suite (void)
+{
+  Suite *s = suite_create ("BBP Suite");
+
+  /* Core test case */
+  TCase *tc_core = tcase_create ("Core");
+  tcase_add_checked_fixture (tc_core, setup, teardown);
+  tcase_add_test (tc_core, test_iexp);
+  tcase_add_test (tc_core, test_convert_floating_decimal_to_hex);
+  tcase_add_test (tc_core, test_convert_log_of_2_to_binary);
+  suite_add_tcase (s, tc_core);
+
+  return s;
+}
+
 int main(void)
 {
-    int result = test();
-    if (result == 0)
-    {
-        printf("Tests passed.\n");
-
-        return 0;
-    }
-    else
-    {
-        printf("Tests failed.\n");
-
-        return 1;
-    }
+  int number_failed;
+  Suite *s = my_suite ();
+  SRunner *sr = srunner_create (s);
+  srunner_run_all (sr, CK_NORMAL);
+  number_failed = srunner_ntests_failed (sr);
+  srunner_free (sr);
+  return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 int test(void)
 {
     int fail_count = 0;
-    fail_count += test_iexp();
-    fail_count += test_convert_floating_decimal_to_hex();
-    fail_count += test_convert_log_of_2_to_binary();
     fail_count += test_log_2_binary();
     fail_count += test_compute_pi_sums();
     fail_count += test_pi_hex();
@@ -165,104 +238,6 @@ int test_pi_hex_n_places(char* expected, long n, int places)
 
         ret_val = 1;
     }
-    free(actual);
-
-    return ret_val;
-}
-
-
-int test_convert_log_of_2_to_binary(void)
-{
-    // log(2) base 2 = 0.101100010111...
-    char* expected  = "101100010111";
-    int ret_val;
-    char* actual = convert_floating_decimal_to_base(log(2.0), 12, 2);
-    if (strcmp(expected, actual) == 0)
-    {
-        printf("test_convert_log_of_2_to_binary passed.\n");
-        printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
-
-        ret_val = 0;
-    }
-    else
-    {
-        printf("test_convert_log_of_2_to_binary failed.\n");
-        printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
-
-        ret_val = 1;
-    }
-
-    free(actual);
-
-    return ret_val;
-}
-
-
-int test_iexp(void)
-{
-    int error_count = 0;
-
-    int x = 10;
-    unsigned n = 999;
-    unsigned k = 257;
-    unsigned long int expected =  96;
-    mpz_t rop;
-    mpz_init(rop);
-    modular_pow_gmp(rop, x, n, k);
-    unsigned long int actual = mpz_get_ui(rop);
-    mpz_clear(rop);
-    if (expected != actual)
-    {
-        printf("test_iexp failed.\n");
-        printf("\texpected: %lu; actual: %lu.\n", expected, actual);
-
-        error_count++;
-    }
-
-    x = 4;
-    n = 13;
-    k = 497;
-    expected =  445;
-    mpz_init(rop);
-    modular_pow_gmp(rop, x, n, k);
-    actual = mpz_get_ui(rop);
-    mpz_clear(rop);
-    if (expected != actual)
-    {
-        printf("test_iexp failed.\n");
-        printf("\texpected: %lu; actual: %lu.\n", expected, actual);
-
-        error_count++;
-    }
-
-    if (error_count == 0)
-    {
-        printf("test_iexp passed.\n");
-    }
-
-    return error_count;
-}
-
-int test_convert_floating_decimal_to_hex(void)
-{
-    char* expected  = "1C71C71C7";
-    int ret_val;
-    char* actual = convert_floating_decimal_to_hex(1.0 / 9.0, 9);
-    if (strcmp(expected, actual) == 0)
-    {
-        printf("test_convert_floating_decimal_to_hex passed.\n");
-        printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
-
-        ret_val = 0;
-    }
-    else
-    {
-        printf("test_convert_floating_decimal_to_hex failed.\n");
-        printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
-
-        ret_val = 1;
-    }
-
     free(actual);
 
     return ret_val;
