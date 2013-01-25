@@ -18,7 +18,7 @@ int main(void)
     int result = test();
     if (result == 0)
     {
-        printf("Tests succeeded.\n");
+        printf("Tests passed.\n");
 
         return 0;
     }
@@ -37,34 +37,26 @@ int test(void)
     fail_count += test_convert_floating_decimal_to_hex();
     fail_count += test_convert_log_of_2_to_binary();
     fail_count += test_log_2_binary();
-    fail_count += test_pi_hex_0_8();
-    fail_count += test_pi_hex_1_8();
-    fail_count += test_pi_hex_2_8();
-
-    fail_count += test_compute_pi_sum1();
-    fail_count += test_compute_pi_sum2();
-    fail_count += test_compute_pi_sum3();
-    fail_count += test_compute_pi_sum4();
-
-    fail_count += test_pi_hex_10_n();
+    fail_count += test_compute_pi_sums();
+    fail_count += test_pi_hex();
     printf("\n");
 
     return fail_count;
 }
 
-int test_compute_pi_sum(long double (*pt2_compute_pi_sum)(int), long double expected, long double tolerance)
+int test_compute_pi_sum(int id, long double (*pt2_compute_pi_sum)(int), long double expected, long double tolerance)
 {
     long double actual = (*pt2_compute_pi_sum)(1000000 + 1);
     long double delta = fabs(actual - expected);
     if (delta <= tolerance)
     {
-        printf("test_compute_pi_sum passed\n");
+        printf("test_compute_pi_sum%d passed\n", id + 1);
 
         return 0;
     }
     else
     {
-        printf("test_compute_pi_sum failed\n");
+        printf("test_compute_pi_sum%d failed\n", id + 1);
         printf("\texpected:   %.30Lf.\n", expected);
         printf("\tactual:     %.30Lf.\n", actual);
         printf("\tdifference: %.30Lf.\n", delta);
@@ -73,60 +65,33 @@ int test_compute_pi_sum(long double (*pt2_compute_pi_sum)(int), long double expe
     }
 }
 
-int test_compute_pi_sum1(void) {
-    // Extended value =     0.181039533801436041475746256679
-    long double expected  = 0.1810395338014360;
-    long double tolerance = 0.0000000000000001;
-    int result = test_compute_pi_sum(&compute_pi_sum1, expected, tolerance);
-    if (result > 0)
+int test_compute_pi_sums(void)
+{
+    long double expected[] = 
+        { 0.1810395338014360, 0.776065549807807, 0.3624585640705741, 
+          0.38613867395201484};
+    long double tolerance[] = 
+        { 0.0000000000000001, 0.000000000000001, 0.0000000000000001, 
+          0.00000000000000001 };
+    long double (*fps[4])(int); 
+    fps[0] = compute_pi_sum1;
+    fps[1] = compute_pi_sum2;
+    fps[2] = compute_pi_sum3;
+    fps[3] = compute_pi_sum4;
+    int result = 0;
+    for (int i = 0; i < 4; i++) 
     {
-        printf("test_compute_pi_sum1 failed\n");
+        int r = test_compute_pi_sum(i, fps[i], expected[i], tolerance[i]);
+        if (result > 0)
+        {
+            printf("test_compute_pi_sum%d failed\n", i + 1);
+        }
+        result += r;
     }
     
     return result;
 }
 
-int test_compute_pi_sum2(void)
-{
-    // Extended value =     0.776065549807807508742030222493
-    long double expected  = 0.776065549807807;
-    long double tolerance = 0.000000000000001;
-    int result = test_compute_pi_sum(&compute_pi_sum2, expected, tolerance);
-    if (result > 0)
-    {
-        printf("test_compute_pi_sum2 failed\n");
-    }
-    
-    return result;
-}
-
-int test_compute_pi_sum3(void)
-{
-    // Extended value =     0.362458564070574140725256029327
-    long double expected  = 0.3624585640705741;
-    long double tolerance = 0.0000000000000001;
-    int result = test_compute_pi_sum(&compute_pi_sum3, expected, tolerance);
-    if (result > 0)
-    {
-        printf("test_compute_pi_sum3 failed\n");
-    }
-    
-    return result;
-}
-
-int test_compute_pi_sum4(void)
-{
-    // Extended value =     0.386138673952014843671065591479
-    long double expected  = 0.38613867395201484;
-    long double tolerance = 0.00000000000000001;
-    int result = test_compute_pi_sum(&compute_pi_sum4, expected, tolerance);
-    if (result > 0)
-    {
-        printf("test_compute_pi_sum4 failed\n");
-    }
-    
-    return result;
-}
 
 int test_log_2_binary(void)
 {
@@ -140,7 +105,7 @@ int test_log_2_binary(void)
         char* actual = log_2_binary(n[i], places);
         if (strcmp(expected[i], actual) == 0)
         {
-            printf("test_log_2_binary succeeded.\n");
+            printf("test_log_2_binary passed.\n");
             printf("\texpected: \"%s\"; actual: \"%s\".\n", expected[i], actual);
         }
         else
@@ -156,21 +121,11 @@ int test_log_2_binary(void)
     return ret_val;
 }
 
-int test_pi_hex_0_8(void)
-{
-    // pi base 16 = 3.243F6A88...
-    char* expected = "243F6A88";
-    int n = 1;
-    int places = strlen(expected);
-
-    return test_pi_hex_n_places(expected, n, places);
-}
-
-int test_pi_hex_10_n(void)
+int test_pi_hex(void)
 {
     char* expecteds[] = 
-        { "26C65E52CB459", "17AF5863EFED", "ECB840E2192", /* "85895585A0428B" */ };
-    long ns[] =  { 1000000,       10000000,     100000000,      /* 1000000000 */ };
+        { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB459", "17AF5863EFED", "ECB840E2192", /* "85895585A0428B" */ };
+    long ns[] =  { 1, 2, 3, 1000000,       10000000,     100000000,      /* 1000000000 */ };
     int error_count = 0;
     for (int i = 0; i < sizeof(ns) / sizeof(int); i++)
     {
@@ -193,7 +148,7 @@ int test_pi_hex_n_places(char* expected, long n, int places)
     int ret_val;
     if (strcmp(expected, actual) == 0)
     {
-        printf("test_pi_hex_n_places(%ld, %d) succeeded.\n", n, places);
+        printf("test_pi_hex_n_places(%ld, %d) passed.\n", n, places);
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
 
         int seconds = (int)(t2 - t1);
@@ -215,26 +170,6 @@ int test_pi_hex_n_places(char* expected, long n, int places)
     return ret_val;
 }
 
-int test_pi_hex_1_8(void)
-{
-    // pi base 16 = 3.243F6A888...
-    char* expected = "43F6A888";
-    int n = 2;
-    int places = strlen(expected);
-
-    return test_pi_hex_n_places(expected, n, places);
-}
-
-int test_pi_hex_2_8(void)
-{
-    // pi base 16 = 3.243F6A8885...
-    char* expected = "3F6A8885";
-    int n = 3;
-    int places = strlen(expected);
-
-    return test_pi_hex_n_places(expected, n, places);
-}
-
 
 int test_convert_log_of_2_to_binary(void)
 {
@@ -244,7 +179,7 @@ int test_convert_log_of_2_to_binary(void)
     char* actual = convert_floating_decimal_to_base(log(2.0), 12, 2);
     if (strcmp(expected, actual) == 0)
     {
-        printf("test_convert_log_of_2_to_binary succeeded.\n");
+        printf("test_convert_log_of_2_to_binary passed.\n");
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
 
         ret_val = 0;
@@ -315,7 +250,7 @@ int test_convert_floating_decimal_to_hex(void)
     char* actual = convert_floating_decimal_to_hex(1.0 / 9.0, 9);
     if (strcmp(expected, actual) == 0)
     {
-        printf("test_convert_floating_decimal_to_hex succeeded.\n");
+        printf("test_convert_floating_decimal_to_hex passed.\n");
         printf("\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
 
         ret_val = 0;
