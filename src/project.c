@@ -20,7 +20,6 @@
 #include <sys/types.h>
 #include <time.h>
 
-#include "../test/test.h"
 #include "../include/pi.h"
 #include "../include/log2.h"
 #include "../include/aux.h"
@@ -36,18 +35,14 @@ int main(int argc, char* argv[])
     }
 
     int tflag = 0;
-    int uflag = 0;
     char* nvalue = NULL;
     int c;
 
-    while ((c = getopt(argc, argv, "tun:")) != -1)
+    while ((c = getopt(argc, argv, "tn:")) != -1)
         switch (c)
         {
             case 't':
                 tflag = 1;
-                break;
-            case 'u':
-                uflag = 1;
                 break;
             case 'n':
                 nvalue = optarg;
@@ -74,23 +69,6 @@ int main(int argc, char* argv[])
     mp_bitcnt_t default_float_prec = mpf_get_default_prec();
     printf("Default float precision is %lu bits.\n", default_float_prec);
     
-    if (uflag)
-    {
-        int result = test();
-        if (result == 0)
-        {
-            printf("Tests succeeded.\n");
-
-            return 0;
-        }
-        else
-        {
-            printf("Tests failed.\n");
-
-            return 1;
-        }
-    }
-
     int d;
     if (optind >= argc)
     {

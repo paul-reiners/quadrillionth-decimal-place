@@ -14,17 +14,17 @@ CC = clang
 CFLAGS = -ggdb -O0 -Qunused-arguments -std=c99 -Wall -Werror
 
 # name for executable
-EXE = project
+EXE = test
 
 # space-separated list of header files
-HDRS = ./include/aux.h ./include/bbp.h ./include/pi.h ./include/log2.h
+HDRS = ../include/aux.h ../include/bbp.h ../include/pi.h ../include/log2.h test.h
 
 # space-separated list of libraries, if any,
 # each of which should be prefixed with -l
 LIBS = -lm -lgmp
 
 # space-separated list of source files
-SRCS = ./src/project.c ./src/aux.c ./src/bbp.c ./src/pi.c ./src/log2.c
+SRCS = ../src/aux.c ../src/bbp.c ../src/pi.c ../src/log2.c ../test/test.c
 
 # automatically generated list of object files
 OBJS = $(SRCS:.c=.o)
@@ -38,4 +38,4 @@ $(OBJS): $(HDRS) Makefile
 
 # housekeeping
 clean:
-	rm -f core $(EXE) *.o ./src/*.o
+	rm -f core $(EXE) *.o ../src/*.o *.o

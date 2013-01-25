@@ -13,6 +13,23 @@
 #include "../include/pi.h"
 #include "../include/log2.h"
 
+int main(void)
+{
+    int result = test();
+    if (result == 0)
+    {
+        printf("Tests succeeded.\n");
+
+        return 0;
+    }
+    else
+    {
+        printf("Tests failed.\n");
+
+        return 1;
+    }
+}
+
 int test(void)
 {
     int fail_count = 0;
