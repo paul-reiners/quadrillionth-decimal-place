@@ -17,7 +17,7 @@ CFLAGS = -ggdb -O0 -Qunused-arguments -std=c99 -Wall -Werror
 EXE = test
 
 # space-separated list of header files
-HDRS = ../include/aux.h ../include/bbp.h ../include/pi.h ../include/log2.h test.h
+HDRS = ../include/aux.h ../include/bbp.h ../include/pi.h ../include/log2.h
 
 # space-separated list of libraries, if any,
 # each of which should be prefixed with -l
