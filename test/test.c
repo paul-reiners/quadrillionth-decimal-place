@@ -103,7 +103,7 @@ START_TEST (test_compute_pi_sums)
     long double tolerance[] = 
         { 0.0000000000000001, 0.000000000000001, 0.0000000000000001, 
           0.00000000000000001 };
-    long double (*fps[4])(int); 
+    long double (*fps[4])(int) = { compute_pi_sum1, compute_pi_sum2, compute_pi_sum3, compute_pi_sum4 }; 
     fps[0] = compute_pi_sum1;
     fps[1] = compute_pi_sum2;
     fps[2] = compute_pi_sum3;
@@ -119,25 +119,23 @@ START_TEST (test_compute_pi_sums)
 }
 END_TEST
 
+static const char* expecteds[] = 
+    { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB459", "17AF5863EFED", "ECB840E2192", /* "85895585A0428B" */ };
+static const long ns[] =  { 1, 2, 3, 1000000,       10000000,     100000000,      /* 1000000000 */ };
+
 START_TEST (test_pi_hex)
 {
-    char* expecteds[] = 
-        { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB459", "17AF5863EFED", "ECB840E2192", /* "85895585A0428B" */ };
-    long ns[] =  { 1, 2, 3, 1000000,       10000000,     100000000,      /* 1000000000 */ };
-    for (int i = 0; i < sizeof(ns) / sizeof(int); i++)
-    {
-        char* expected = expecteds[i];
-        int places = strlen(expected);
-        long n = ns[i];
+    const char* expected = expecteds[_i];
+    int places = strlen(expected);
+    long n = ns[_i];
 
-        char* actual = pi_hex(n, places);
+    char* actual = pi_hex(n, places);
 
-        char err_msg[200];
-        sprintf(err_msg, "\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
-        fail_unless(strcmp(expected, actual) == 0, err_msg);
-    
-        free(actual);
-    }
+    char err_msg[200];
+    sprintf(err_msg, "\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
+    fail_unless(strcmp(expected, actual) == 0, err_msg);
+
+    free(actual);
 }
 END_TEST
 
@@ -155,7 +153,7 @@ my_suite (void)
   tcase_add_test (tc_core, test_convert_log_of_2_to_binary);
   tcase_add_loop_test (tc_core, test_log_2_binary, 0, 3);
   tcase_add_test (tc_core, test_compute_pi_sums);
-  tcase_add_test (tc_core, test_pi_hex);
+  tcase_add_loop_test (tc_core, test_pi_hex, 0, 6);
 
   tcase_set_timeout (tc_core, 0);
   suite_add_tcase (s, tc_core);
