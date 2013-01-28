@@ -22,7 +22,7 @@ teardown (void)
 {
 }
 
-START_TEST (test_iexp)
+START_TEST (test_modular_pow_gmp)
 {
     int x = 10;
     unsigned n = 999;
@@ -95,27 +95,24 @@ START_TEST (test_log_2_binary)
 }
 END_TEST
 
+static const long double compute_pi_sums_expected[] = 
+    { 0.1810395338014360, 0.776065549807807, 0.3624585640705741, 
+      0.38613867395201484};
+static const long double tolerance[] = 
+    { 0.0000000000000001, 0.000000000000001, 0.0000000000000001, 
+      0.00000000000000001 };
+static long double (*fps[4])(int) = { compute_pi_sum1, compute_pi_sum2, compute_pi_sum3, compute_pi_sum4 }; 
+
 START_TEST (test_compute_pi_sums)
 {
-    long double expected[] = 
-        { 0.1810395338014360, 0.776065549807807, 0.3624585640705741, 
-          0.38613867395201484};
-    long double tolerance[] = 
-        { 0.0000000000000001, 0.000000000000001, 0.0000000000000001, 
-          0.00000000000000001 };
-    long double (*fps[4])(int) = { compute_pi_sum1, compute_pi_sum2, compute_pi_sum3, compute_pi_sum4 }; 
-    fps[0] = compute_pi_sum1;
-    fps[1] = compute_pi_sum2;
-    fps[2] = compute_pi_sum3;
-    fps[3] = compute_pi_sum4;
-    for (int i = 0; i < 4; i++) 
-    {
-        long double actual = (*fps[i])(1000000 + 1);
-        long double delta = fabs(actual - expected[i]);
-        char err_msg[200];
-        sprintf(err_msg, "\n\texpected:   %.30Lf.\n\tactual:     %.30Lf.\n\tdifference: %.30Lf.\n", expected[i], actual, delta);
-        fail_unless(delta <= tolerance[i], err_msg);
-    }
+    long double actual = (*fps[_i])(1000000 + 1);
+    long double delta = fabs(actual - compute_pi_sums_expected[_i]);
+    char err_msg[200];
+    sprintf(
+        err_msg, 
+        "\n\texpected:   %.30Lf.\n\tactual:     %.30Lf.\n\tdifference: %.30Lf.\n", 
+        compute_pi_sums_expected[_i], actual, delta);
+    fail_unless(delta <= tolerance[_i], err_msg);
 }
 END_TEST
 
@@ -148,15 +145,22 @@ my_suite (void)
   TCase *tc_core = tcase_create ("Core");
   tcase_add_checked_fixture (tc_core, setup, teardown);
 
-  tcase_add_test (tc_core, test_iexp);
+  tcase_add_test (tc_core, test_modular_pow_gmp);
   tcase_add_test (tc_core, test_convert_floating_decimal_to_hex);
   tcase_add_test (tc_core, test_convert_log_of_2_to_binary);
   tcase_add_loop_test (tc_core, test_log_2_binary, 0, 3);
-  tcase_add_test (tc_core, test_compute_pi_sums);
+  tcase_add_loop_test (tc_core, test_compute_pi_sums, 0, 4);
   tcase_add_loop_test (tc_core, test_pi_hex, 0, 6);
 
   tcase_set_timeout (tc_core, 0);
   suite_add_tcase (s, tc_core);
+
+  /* Extended test case */
+  TCase *tc_extended = tcase_create ("Extended");
+  tcase_add_checked_fixture (tc_extended, setup, teardown);
+
+  tcase_set_timeout (tc_extended, 0);
+  suite_add_tcase (s, tc_extended);
 
   return s;
 }
