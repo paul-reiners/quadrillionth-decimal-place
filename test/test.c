@@ -131,20 +131,23 @@ START_TEST (test_compute_pi_sums_extended)
 END_TEST
 
 static const char* expecteds[] = 
-    { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB459", "17AF5863EFED", "ECB840E2192", /* "85895585A0428B" */ };
+    { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB4593", "17AF5863EFED8D", "ECB840E21926EC", /* "85895585A0428B" */ };
+static const int pi_hex_precision[] = { 8, 8, 8, 13, 12, 11};
 static const long ns[] =  { 1, 2, 3, 1000000,       10000000,     100000000,      /* 1000000000 */ };
 
 START_TEST (test_pi_hex)
 {
     const char* expected = expecteds[_i];
-    int places = strlen(expected);
+    int places = pi_hex_precision[_i];
     long n = ns[_i];
 
     char* actual = pi_hex(n, places);
 
     char err_msg[200];
     sprintf(err_msg, "\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
-    fail_unless(strcmp(expected, actual) == 0, err_msg);
+    for (int i = 0; i < places; i++) {
+        fail_unless(expected[i] == actual[i], err_msg);
+    }
 
     free(actual);
 }
