@@ -116,6 +116,20 @@ START_TEST (test_compute_pi_sums)
 }
 END_TEST
 
+START_TEST (test_compute_pi_sums_extended)
+{
+    long double actual = (*fps[_i])(1000000 + 1);
+    long double delta = fabs(actual - compute_pi_sums_expected[_i]);
+    long double tolerance = 0.000000000000000000000000000001;
+    char err_msg[200];
+    sprintf(
+        err_msg, 
+        "\n\texpected:   %.30Lf.\n\tactual:     %.30Lf.\n\tdifference: %.30Lf.\n", 
+        compute_pi_sums_expected[_i], actual, delta);
+    fail_unless(delta <= tolerance, err_msg);
+}
+END_TEST
+
 static const char* expecteds[] = 
     { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB459", "17AF5863EFED", "ECB840E2192", /* "85895585A0428B" */ };
 static const long ns[] =  { 1, 2, 3, 1000000,       10000000,     100000000,      /* 1000000000 */ };
@@ -161,6 +175,7 @@ my_suite (void)
 
   tcase_set_timeout (tc_extended, 0);
   suite_add_tcase (s, tc_extended);
+  tcase_add_loop_test (tc_extended, test_compute_pi_sums_extended, 0, 4);
 
   return s;
 }
