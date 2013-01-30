@@ -10,6 +10,8 @@
 #ifndef BBP_H
 #define BBP_H
 
+#include <gmp.h>
+
 #include <stdbool.h>
 
 /*
@@ -27,7 +29,7 @@
  *
  *  returns: the value of the first sum
  */
-long double compute_bbp_first_sum_gmp(int d, int base, int c, long long int (*p)(long long int), bool start_at_0);
+void compute_bbp_first_sum_gmp(mpf_t sum, int d, int base, int c, long long int (*p)(long long int), bool start_at_0);
 
 /*
  * Function:  compute_bbp_second_sum_gmp 

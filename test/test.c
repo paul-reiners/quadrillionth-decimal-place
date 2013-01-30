@@ -12,6 +12,8 @@
 #include "../include/pi.h"
 #include "../include/log2.h"
 
+#define RUN_EXTENDED_TEST_CASE 0
+
 void
 setup (void)
 {
@@ -131,14 +133,33 @@ START_TEST (test_compute_pi_sums_extended)
 END_TEST
 
 static const char* expecteds[] = 
-    { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB4593", "17AF5863EFED8D", "ECB840E21926EC", /* "85895585A0428B" */ };
+    { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB4593", "17AF5863EFED8D", 
+      "ECB840E21926EC", "85895585A0428B" };
 static const int pi_hex_precision[] = { 8, 8, 8, 13, 12, 11};
-static const long ns[] =  { 1, 2, 3, 1000000,       10000000,     100000000,      /* 1000000000 */ };
+static const long ns[] =  { 1, 2, 3, 1000000, 10000000, 100000000, 1000000000 };
 
 START_TEST (test_pi_hex)
 {
     const char* expected = expecteds[_i];
     int places = pi_hex_precision[_i];
+    long n = ns[_i];
+
+    char* actual = pi_hex(n, places);
+
+    char err_msg[200];
+    sprintf(err_msg, "\texpected: \"%s\"; actual: \"%s\".\n", expected, actual);
+    for (int i = 0; i < places; i++) {
+        fail_unless(expected[i] == actual[i], err_msg);
+    }
+
+    free(actual);
+}
+END_TEST
+
+START_TEST (test_pi_hex_extended)
+{
+    const char* expected = expecteds[_i];
+    int places = 14;
     long n = ns[_i];
 
     char* actual = pi_hex(n, places);
@@ -172,25 +193,33 @@ my_suite (void)
   tcase_set_timeout (tc_core, 0);
   suite_add_tcase (s, tc_core);
 
-  /* Extended test case */
-  TCase *tc_extended = tcase_create ("Extended");
-  tcase_add_checked_fixture (tc_extended, setup, teardown);
+  if (RUN_EXTENDED_TEST_CASE) {
+      /* Extended test case */
+      TCase *tc_extended = tcase_create ("Extended");
+      tcase_add_checked_fixture (tc_extended, setup, teardown);
 
-  tcase_set_timeout (tc_extended, 0);
-  suite_add_tcase (s, tc_extended);
-  tcase_add_loop_test (tc_extended, test_compute_pi_sums_extended, 0, 4);
+      tcase_set_timeout (tc_extended, 0);
+      suite_add_tcase (s, tc_extended);
+      tcase_add_loop_test (tc_extended, test_compute_pi_sums_extended, 0, 4);
+      tcase_add_loop_test (tc_extended, test_pi_hex_extended, 0, 7);
+  }
 
   return s;
 }
 
 int main(void)
 {
-  int number_failed;
-  Suite *s = my_suite ();
-  SRunner *sr = srunner_create (s);
-  srunner_run_all (sr, CK_VERBOSE);
-  number_failed = srunner_ntests_failed (sr);
-  srunner_free (sr);
-  return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+    mpf_set_default_prec(128);
+    mp_bitcnt_t default_float_prec = mpf_get_default_prec();
+    printf("Default float precision is %lu bits.\n", default_float_prec);
+
+    int number_failed;
+    Suite *s = my_suite ();
+    SRunner *sr = srunner_create (s);
+    srunner_run_all (sr, CK_VERBOSE);
+    number_failed = srunner_ntests_failed (sr);
+    srunner_free (sr);
+
+    return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
