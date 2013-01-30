@@ -26,13 +26,31 @@
 char* pi_hex(int d, int num_places)
 {
     int base = 16;
+    long double sum = pi(d);
+
+    return convert_floating_decimal_to_base(sum, num_places, base);
+}
+
+/*
+ * Function:  pi
+ * --------------------
+ * Computes the pi hex BBP formula.
+ * It is the responsibility of the calling function to free the returned string.
+ *
+ *  d: hex digit to be calculated
+ *
+ *  returns: pi starting at digit d
+ */
+long double pi(int d)
+{
     long double sum =
         4 * compute_pi_sum1(d)
         - 2 * compute_pi_sum2(d)
         - compute_pi_sum3(d)
         - compute_pi_sum4(d);
+    long double frac_part = mod_one(sum);
 
-    return convert_floating_decimal_to_base(sum, num_places, base);
+    return frac_part;
 }
 
 /*

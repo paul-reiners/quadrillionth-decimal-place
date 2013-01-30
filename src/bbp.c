@@ -30,7 +30,6 @@ long double compute_bbp(int digit, int base, int c, long long int (*p)(long long
 
     mpf_t mpf_first_sum;
     mpf_init(mpf_first_sum);
-    mpf_set_d(mpf_first_sum, 0.0);
     compute_bbp_first_sum_gmp(mpf_first_sum, d, base, c, p, start_at_0);
     double first_sum = mpf_get_d(mpf_first_sum);
     mpf_clear(mpf_first_sum);
@@ -59,6 +58,7 @@ long double compute_bbp(int digit, int base, int c, long long int (*p)(long long
  *  returns: the value of the first sum
  */
 void compute_bbp_first_sum_gmp(mpf_t sum, int d, int base, int c, long long int (*p)(long long int), bool start_at_0) {
+    mpf_set_d(sum, 0.0);
     int k_start = start_at_0 ? 0 : 1;
     for (long long int k = k_start; k <= floor(d / c); k++)
     {

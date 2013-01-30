@@ -25,6 +25,18 @@
 char* pi_hex(int d, int num_places);
 
 /*
+ * Function:  pi
+ * --------------------
+ * Computes the pi hex BBP formula.
+ * It is the responsibility of the calling function to free the returned string.
+ *
+ *  d: hex digit to be calculated
+ *
+ *  returns: pi starting at digit d
+ */
+long double pi(int d);
+
+/*
  * Function:  pi_hex_p1 
  * --------------------
  * The first polynomial p1 used for the pi BBP formula

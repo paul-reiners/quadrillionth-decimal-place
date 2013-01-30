@@ -118,6 +118,36 @@ START_TEST (test_compute_pi_sums)
 }
 END_TEST
 
+START_TEST (test_pi)
+{
+    long double actual = pi(1000000 + 1);
+    long double expected  = 0.423429797567540358599812674109;
+    long double tolerance = 0.0000000000000001;
+    long double delta = fabs(actual - expected);
+    char err_msg[200];
+    sprintf(
+        err_msg, 
+        "\n\texpected:   %.30Lf.\n\tactual:     %.30Lf.\n\tdifference: %.30Lf.\n", 
+        expected, actual, delta);
+    fail_unless(delta <= tolerance, err_msg);
+}
+END_TEST
+
+START_TEST (test_pi_extended)
+{
+    long double actual = pi(1000000 + 1);
+    long double expected  = 0.423429797567540358599812674109;
+    long double tolerance = 0.000000000000000000000000000001;
+    long double delta = fabs(actual - expected);
+    char err_msg[200];
+    sprintf(
+        err_msg, 
+        "\n\texpected:   %.30Lf.\n\tactual:     %.30Lf.\n\tdifference: %.30Lf.\n", 
+        expected, actual, delta);
+    fail_unless(delta <= tolerance, err_msg);
+}
+END_TEST
+
 START_TEST (test_compute_pi_sums_extended)
 {
     long double actual = (*fps[_i])(1000000 + 1);
@@ -188,6 +218,7 @@ my_suite (void)
   tcase_add_test (tc_core, test_convert_log_of_2_to_binary);
   tcase_add_loop_test (tc_core, test_log_2_binary, 0, 3);
   tcase_add_loop_test (tc_core, test_compute_pi_sums, 0, 4);
+  tcase_add_test (tc_core, test_pi);
   tcase_add_loop_test (tc_core, test_pi_hex, 0, 6);
 
   tcase_set_timeout (tc_core, 0);
@@ -201,6 +232,7 @@ my_suite (void)
       tcase_set_timeout (tc_extended, 0);
       suite_add_tcase (s, tc_extended);
       tcase_add_loop_test (tc_extended, test_compute_pi_sums_extended, 0, 4);
+      tcase_add_test (tc_extended, test_pi_extended);
       tcase_add_loop_test (tc_extended, test_pi_hex_extended, 0, 7);
   }
 
