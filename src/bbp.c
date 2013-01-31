@@ -34,10 +34,13 @@ long double compute_bbp(int digit, int base, int c, long long int (*p)(long long
     double first_sum = mpf_get_d(mpf_first_sum);
     mpf_clear(mpf_first_sum);
 
-    long double sum
-        = mod_one(
-                first_sum
-                + compute_bbp_second_sum_gmp(d, base, c, p));
+    mpf_t mpf_second_sum;
+    mpf_init(mpf_second_sum);
+    compute_bbp_second_sum_gmp(mpf_second_sum, d, base, c, p);
+    double second_sum = mpf_get_d(mpf_second_sum);
+    mpf_clear(mpf_second_sum);
+
+    long double sum = mod_one(first_sum + second_sum);
 
     return sum;
 }
@@ -100,10 +103,8 @@ void compute_bbp_first_sum_gmp(mpf_t sum, int d, int base, int c, long long int 
  *
  *  returns: the value of the second sum
  */
-long double compute_bbp_second_sum_gmp(int d, int base, int c, long long int (*p)(long long int)) 
+void compute_bbp_second_sum_gmp(mpf_t sum, int d, int base, int c, long long int (*p)(long long int)) 
 {
-    mpf_t sum;
-    mpf_init(sum);
     mpf_set_d(sum, 0.0);
 
     long long int k = floor(d / c) + 1;
@@ -138,11 +139,5 @@ long double compute_bbp_second_sum_gmp(int d, int base, int c, long long int (*p
         k++;
     }
     while (mpf_cmp(prev_sum, sum) != 0);
-
-    double result = mpf_get_d(sum);
-
-    mpf_clear(sum);
-
-    return result;
 }
 

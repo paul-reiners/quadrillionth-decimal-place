@@ -43,7 +43,7 @@ void compute_bbp_first_sum_gmp(mpf_t sum, int d, int base, int c, long long int 
  *
  *  returns: the value of the second sum
  */
-long double compute_bbp_second_sum_gmp(int d, int base, int c, long long int (*p)(long long int));
+void compute_bbp_second_sum_gmp(mpf_t sum, int d, int base, int c, long long int (*p)(long long int));
 
 /*
  * Function:  compute_bbp 
