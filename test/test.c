@@ -103,7 +103,7 @@ static const long double compute_pi_sums_expected[] =
 static const long double tolerance[] = 
     { 0.0000000000000001, 0.000000000000001, 0.0000000000000001, 
       0.00000000000000001 };
-static long double (*fps[4])(int) = { compute_pi_sum1, compute_pi_sum2, compute_pi_sum3, compute_pi_sum4 }; 
+static long double (*fps[4])(long long int) = { compute_pi_sum1, compute_pi_sum2, compute_pi_sum3, compute_pi_sum4 }; 
 
 START_TEST (test_compute_pi_sums)
 {

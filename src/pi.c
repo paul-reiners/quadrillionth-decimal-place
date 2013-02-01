@@ -23,7 +23,7 @@
  *
  *  returns: the dth hex digit of pi (plus num_places - 1 more places)
  */
-char* pi_hex(int d, int num_places)
+char* pi_hex(long long int d, int num_places)
 {
     int base = 16;
     long double sum = pi(d);
@@ -41,7 +41,7 @@ char* pi_hex(int d, int num_places)
  *
  *  returns: pi starting at digit d
  */
-long double pi(int d)
+long double pi(long long int d)
 {
     long double sum =
         4 * compute_pi_sum1(d)
@@ -62,7 +62,7 @@ long double pi(int d)
  *
  *  returns: the first term of the pi hex BBP formula
  */
-long double compute_pi_sum1(int d)
+long double compute_pi_sum1(long long int d)
 {
     int base = 16;
     int c = 1;
@@ -81,7 +81,7 @@ long double compute_pi_sum1(int d)
  *
  *  returns: the second term of the pi hex BBP formula
  */
-long double compute_pi_sum2(int d)
+long double compute_pi_sum2(long long int d)
 {
     int base = 16;
     int c = 1;
@@ -100,7 +100,7 @@ long double compute_pi_sum2(int d)
  *
  *  returns: the third term of the pi hex BBP formula
  */
-long double compute_pi_sum3(int d)
+long double compute_pi_sum3(long long int d)
 {
     int base = 16;
     int c = 1;
@@ -119,7 +119,7 @@ long double compute_pi_sum3(int d)
  *
  *  returns: the fourth term of the pi hex BBP formula
  */
-long double compute_pi_sum4(int d)
+long double compute_pi_sum4(long long int d)
 {
     int base = 16;
     int c = 1;
