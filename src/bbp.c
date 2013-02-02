@@ -139,5 +139,8 @@ void compute_bbp_second_sum_gmp(mpf_t sum, int d, int base, int c, long long int
         k++;
     }
     while (mpf_cmp(prev_sum, sum) != 0);
+    
+    mpf_clear(base_gmp);
+    mpf_clear(prev_sum);
 }
 

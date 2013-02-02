@@ -12,7 +12,7 @@
 #include "../include/pi.h"
 #include "../include/log2.h"
 
-#define RUN_EXTENDED_TEST_CASE 0
+#define RUN_EXTENDED_TEST_CASE 1
 
 void
 setup (void)
