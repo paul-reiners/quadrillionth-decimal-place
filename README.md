@@ -27,19 +27,17 @@ Library to achieve this level of precision.
     </li>
 </ul>
 
-        <h2>References</h2>
-        <p>
-            I was inspired to do this project by reading the short story "The Center of the Universe"
-            in the book 
-            <a href="http://www.amazon.com/Reality-Conditions-Short-Mathematical-Fiction/dp/0883855526">
-            <i>Reality Conditions</i></a> by Alex Kasman.  Before that, I first learned about 
-            the BBP formula in the "What is the Quadrillionth Decimal Place of &pi;?" chapter
-            of 
-            <a href="http://www.amazon.com/Computer-Crucible-Introduction-Experimental-Mathematics/dp/1568813430">
-            <i>The Computer as Crucible</i></a> by Jonathan Borwein and Keith Devlin.  (That (obviously) 
-            is
-            also where I stole the title of my project from.)
-        <p>
+<h2>References</h2>
+I was inspired to do this project by reading the short story "The Center of the Universe"
+in the book 
+<a href="http://www.amazon.com/Reality-Conditions-Short-Mathematical-Fiction/dp/0883855526">
+<i>Reality Conditions</i></a> by Alex Kasman.  Before that, I first learned about 
+the BBP formula in the "What is the Quadrillionth Decimal Place of &pi;?" chapter
+of 
+<a href="http://www.amazon.com/Computer-Crucible-Introduction-Experimental-Mathematics/dp/1568813430">
+<i>The Computer as Crucible</i></a> by Jonathan Borwein and Keith Devlin.  (That (obviously) 
+is
+also where I stole the title of my project from.)
 
 
 <h2>Documentation</h2>
