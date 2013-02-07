@@ -12,7 +12,7 @@
 #include "../include/pi.h"
 #include "../include/log2.h"
 
-#define RUN_EXTENDED_TEST_CASE 0
+#define RUN_EXTENDED_TEST_CASE 1
 
 void
 setup (void)
@@ -27,14 +27,23 @@ teardown (void)
 START_TEST (test_modular_pow_gmp)
 {
     int x = 10;
-    unsigned n = 999;
-    unsigned k = 257;
+    unsigned long int n = 999;
+    unsigned long int k = 257;
     unsigned long int expected =  96;
     mpz_t rop;
     mpz_init(rop);
-    modular_pow_gmp(rop, x, n, k);
+    
+    mpz_t mpz_n;
+    mpz_init_set_ui(mpz_n, n);
+    
+    mpz_t mpz_k;
+    mpz_init_set_ui(mpz_k, k);
+    
+    modular_pow_gmp(rop, x, mpz_n, mpz_k);
     unsigned long int actual = mpz_get_ui(rop);
     mpz_clear(rop);
+    mpz_clear(mpz_n);
+    mpz_clear(mpz_k);
 
     char errMsg[100];
     sprintf(errMsg, "\texpected: %lu; actual: %lu.\n", expected, actual);
@@ -43,11 +52,15 @@ START_TEST (test_modular_pow_gmp)
     x = 4;
     n = 13;
     k = 497;
+    mpz_init_set_ui(mpz_n, n);
+    mpz_init_set_ui(mpz_k, k);
     expected =  445;
     mpz_init(rop);
-    modular_pow_gmp(rop, x, n, k);
+    modular_pow_gmp(rop, x, mpz_n, mpz_k);
     actual = mpz_get_ui(rop);
     mpz_clear(rop);
+    mpz_clear(mpz_n);
+    mpz_clear(mpz_k);
     sprintf(errMsg, "\texpected: %lu; actual: %lu.\n", expected, actual);
     fail_unless(expected == actual, errMsg);
 }

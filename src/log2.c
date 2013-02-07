@@ -27,7 +27,7 @@ char* log_2_binary(int d, int num_places)
 {
     int base = 2;
     int c = 1;
-    long long int (*p)(long long int) = &log_2_binary_p;
+    void (*p)(mpz_t, mpz_t) = &log_2_binary_p;
     long double result = compute_bbp(d, base, c, p, false);
 
     return convert_floating_decimal_to_base(result, num_places, base);
@@ -42,8 +42,8 @@ char* log_2_binary(int d, int num_places)
  *
  *  returns: p(k)
  */
-long long int log_2_binary_p(long long int k)
+void log_2_binary_p(mpz_t rop, mpz_t k)
 {
-    return k;
+    mpz_set(rop, k);
 }
 

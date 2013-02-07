@@ -66,7 +66,7 @@ long double compute_pi_sum1(long long int d)
 {
     int base = 16;
     int c = 1;
-    long long int (*p)(long long int) = &pi_hex_p1;
+    void (*p)(mpz_t, mpz_t) = &pi_hex_p1;
     long double result = compute_bbp(d, base, c, p, true);
 
     return result;
@@ -85,7 +85,7 @@ long double compute_pi_sum2(long long int d)
 {
     int base = 16;
     int c = 1;
-    long long int (*p)(long long int) = &pi_hex_p2;
+    void (*p)(mpz_t, mpz_t) = &pi_hex_p2;
     long double result = compute_bbp(d, base, c, p, true);
 
     return result;
@@ -104,7 +104,7 @@ long double compute_pi_sum3(long long int d)
 {
     int base = 16;
     int c = 1;
-    long long int (*p)(long long int) = &pi_hex_p3;
+    void (*p)(mpz_t, mpz_t) = &pi_hex_p3;
     long double result = compute_bbp(d, base, c, p, true);
 
     return result;
@@ -123,7 +123,7 @@ long double compute_pi_sum4(long long int d)
 {
     int base = 16;
     int c = 1;
-    long long int (*p)(long long int) = &pi_hex_p4;
+    void (*p)(mpz_t, mpz_t) = &pi_hex_p4;
     long double result = compute_bbp(d, base, c, p, true);
 
     return result;
@@ -138,9 +138,11 @@ long double compute_pi_sum4(long long int d)
  *
  *  returns: p1(k)
  */
-long long int pi_hex_p1(long long int k)
+void pi_hex_p1(mpz_t rop, mpz_t k)
 {
-    return 8 * k + 1;
+    mpz_set(rop, k);
+    mpz_mul_si(rop, rop, 8);
+    mpz_add_ui(rop, rop, 1);
 }
 
 /*
@@ -152,9 +154,11 @@ long long int pi_hex_p1(long long int k)
  *
  *  returns: p2(k)
  */
-long long int pi_hex_p2(long long int k)
+void pi_hex_p2(mpz_t rop, mpz_t k)
 {
-    return 8 * k + 4;
+    mpz_set(rop, k);
+    mpz_mul_si(rop, rop, 8);
+    mpz_add_ui(rop, rop, 4);
 }
 
 /*
@@ -166,9 +170,11 @@ long long int pi_hex_p2(long long int k)
  *
  *  returns: p3(k)
  */
-long long int pi_hex_p3(long long int k)
+void pi_hex_p3(mpz_t rop, mpz_t k)
 {
-    return 8 * k + 5;
+    mpz_set(rop, k);
+    mpz_mul_si(rop, rop, 8);
+    mpz_add_ui(rop, rop, 5);
 }
 
 /*
@@ -180,8 +186,10 @@ long long int pi_hex_p3(long long int k)
  *
  *  returns: p4(k)
  */
-long long int pi_hex_p4(long long int k)
+void pi_hex_p4(mpz_t rop, mpz_t k)
 {
-    return 8 * k + 6;
+    mpz_set(rop, k);
+    mpz_mul_si(rop, rop, 8);
+    mpz_add_ui(rop, rop, 6);
 }
 

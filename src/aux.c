@@ -32,25 +32,15 @@
  *
  *  returns: (b ^ exponent) % modulus
  */
-void modular_pow_gmp(mpz_t rop, unsigned long long int b, unsigned long long int exponent, unsigned long long int modulus)
+void modular_pow_gmp(mpz_t rop, unsigned long long int b, mpz_t exp, mpz_t mod)
 {
     mpz_t base;
     mpz_init(base);
     mpz_set_ui(base, b);
 
-    mpz_t exp;
-    mpz_init(exp);
-    mpz_set_ui(exp, exponent);
-
-    mpz_t mod;
-    mpz_init(mod);
-    mpz_set_ui(mod, modulus);
-
     mpz_powm(rop, base, exp, mod);
 
-    mpz_clear(exp);
     mpz_clear(base);
-    mpz_clear(mod);
 }
 
 /*

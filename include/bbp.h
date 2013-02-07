@@ -29,7 +29,7 @@
  *
  *  returns: the value of the first sum
  */
-void compute_bbp_first_sum_gmp(mpf_t sum, int d, int base, int c, long long int (*p)(long long int), bool start_at_0);
+void compute_bbp_first_sum_gmp(mpf_t sum, unsigned long int d, int base, long int c, void (*p)(mpz_t, mpz_t), bool start_at_0);
 
 /*
  * Function:  compute_bbp_second_sum_gmp 
@@ -43,7 +43,7 @@ void compute_bbp_first_sum_gmp(mpf_t sum, int d, int base, int c, long long int 
  *
  *  returns: the value of the second sum
  */
-void compute_bbp_second_sum_gmp(mpf_t sum, int d, int base, int c, long long int (*p)(long long int));
+void compute_bbp_second_sum_gmp(mpf_t sum, int d, int base, int c, void (*p)(mpz_t, mpz_t));
 
 /*
  * Function:  compute_bbp 
@@ -57,6 +57,6 @@ void compute_bbp_second_sum_gmp(mpf_t sum, int d, int base, int c, long long int
  *
  *  returns: the value of the BBP formula
  */
-long double compute_bbp(int digit, int base, int c, long long int (*p)(long long int), bool start_at_0);
+long double compute_bbp(int digit, int base, int c, void (*p)(mpz_t, mpz_t), bool start_at_0);
 
 #endif // BBP_H

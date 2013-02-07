@@ -11,6 +11,8 @@
 #ifndef LOG2_H
 #define LOG2_H
 
+#include <gmp.h>
+
 /*
  * Function:  log_2_binary 
  * --------------------
@@ -33,7 +35,7 @@ char* log_2_binary(int d, int num_places);
  *
  *  returns: p(k)
  */
-long long int log_2_binary_p(long long int k);
+void log_2_binary_p(mpz_t rop, mpz_t k);
 
 #endif // LOG2_H
 

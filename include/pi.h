@@ -11,6 +11,8 @@
 #ifndef PI_H
 #define PI_H
 
+#include <gmp.h>
+
 /*
  * Function:  pi_hex 
  * --------------------
@@ -45,7 +47,7 @@ long double pi(long long int d);
  *
  *  returns: p1(k)
  */
-long long int pi_hex_p1(long long int k);
+void pi_hex_p1(mpz_t rop, mpz_t k);
 
 /*
  * Function:  pi_hex_p2 
@@ -56,7 +58,7 @@ long long int pi_hex_p1(long long int k);
  *
  *  returns: p2(k)
  */
-long long int pi_hex_p2(long long int k);
+void pi_hex_p2(mpz_t rop, mpz_t k);
 
 /*
  * Function:  pi_hex_p3 
@@ -67,7 +69,7 @@ long long int pi_hex_p2(long long int k);
  *
  *  returns: p3(k)
  */
-long long int pi_hex_p3(long long int k);
+void pi_hex_p3(mpz_t rop, mpz_t k);
 
 /*
  * Function:  pi_hex_p4 
@@ -78,7 +80,7 @@ long long int pi_hex_p3(long long int k);
  *
  *  returns: p4(k)
  */
-long long int pi_hex_p4(long long int k);
+void pi_hex_p4(mpz_t rop, mpz_t k);
 
 /*
  * Function:  compute_pi_sum1 
