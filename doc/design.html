@@ -134,25 +134,29 @@
             in my tests to verify the correctness
             of my code.
         </p>
-        <h1>Precision</h1>
-        <p>
-            My program is able to correctly calculate out to the one hundred millionth (100,000,000) 
-            hexadecimal place of &pi;.  I would like to have gotten out to the billionth digit.  However,
-            as David Bailey has said,
-        </p>
-            <blockquote>
-                The author has
-                found that on most systems using IEEE 64-bit floating-point arithmetic,
-                a straightforward implementation of the above scheme works properly so
-                long as <i>d</i> is less than approximately 1.18 × 10<sup>7</sup>.
-            </blockquote>
-            <p>
-                So getting out to 1.0 x 10<sup>8</sup> is pretty good.
-            </p>
-        <p>
-            It might be interesting to try using GNU GMP for all the numerical calculations and see 
-            how much more precision that would give me at the cost of what computation time.
-        </p>
+        <h1>Computation Time</h1>
+        <table border="1">
+            <tr>
+                <th>Position</th>
+                <th>Computation Time</th>
+            </tr>
+            <tr>
+                <td>10 ^ 6</td>
+                <td>00:00:13</td>
+            </tr>
+            <tr>
+                <td>10 ^ 7</td>
+                <td>00:02:22</td>
+            </tr>
+            <tr>
+                <td>10 ^ 8</td>
+                <td>00:28:36</td>
+            </tr>
+            <tr>
+                <td>10 ^ 9</td>
+                <td>04:54:23</td>
+            </tr>
+        </table> 
         <h1>Conclusion</h1>
         <p>
             I was inspired to do this project by reading the short story "The Center of the Universe"

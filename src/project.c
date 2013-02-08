@@ -79,19 +79,7 @@ int main(int argc, char* argv[])
     else
     {
         char* dvalue = argv[optind];
-        char* upper_limit_str = "100000000";
-        char too_large_err_msg[120];
-        sprintf(
-            too_large_err_msg,
-            "Cannot handle d larger than %s.  Please specify a smaller value.\n",
-            upper_limit_str);
-        if (strlen(dvalue) > strlen(upper_limit_str))
-        {
-            fprintf(stderr, "%s", too_large_err_msg);
-
-            return 1;
-        }
-        else if (!is_integer(dvalue))
+        if (!is_integer(dvalue))
         {
             fprintf(
                 stderr,
@@ -101,12 +89,6 @@ int main(int argc, char* argv[])
             return 1;
         }
         d = atoi(dvalue);
-        if (d > 100000000)
-        {
-            fprintf(stderr, "%s", too_large_err_msg);
-
-            return 1;
-        }
     }
 
     time_t t1, t2;
@@ -117,8 +99,9 @@ int main(int argc, char* argv[])
     char* result = NULL;
     if (nvalue == NULL || strcmp(nvalue, "pi") == 0)
     {
+        fprintf(stderr, "Computing hex digits of pi beginning at position %d.\n", d);
         result = pi_hex(d, PLACES);
-        fprintf(stderr, "Hex digits of pi beginning at position %d: ", d);
+        fprintf(stderr, "Hex digits of pi beginning at position %d.\n", d);
     }
     else if (strcmp(nvalue, "log2") == 0)
     {

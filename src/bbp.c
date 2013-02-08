@@ -171,6 +171,7 @@ void compute_bbp_second_sum_gmp(mpf_t sum, int d, int base, int c, void (*p)(mpz
         mpf_init(quotient);
         mpf_div(quotient, num, denom);        
         mpf_clear(num);
+        mpf_clear(denom);
         
         mpf_add(sum, sum, quotient);
         mpf_clear(quotient);
