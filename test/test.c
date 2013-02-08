@@ -12,7 +12,7 @@
 #include "../include/pi.h"
 #include "../include/log2.h"
 
-#define RUN_EXTENDED_TEST_CASE 1
+#define RUN_EXTENDED_TEST_CASE 0
 
 void
 setup (void)
@@ -114,9 +114,9 @@ static const long double compute_pi_sums_expected[] =
     { 0.181039533801436067853489346252, 0.776065549807807461372297594382, 
       0.362458564070574142068334335591, 0.386138673952014848001215186544 };
 static const long double tolerance[] = 
-    { 0.0000000000000001, 0.000000000000001, 0.0000000000000001, 
-      0.00000000000000001 };
-static long double (*fps[4])(long long int) = { compute_pi_sum1, compute_pi_sum2, compute_pi_sum3, compute_pi_sum4 }; 
+    { 0.000000001, 0.000000001, 0.000000001, 0.000000001 };
+static long double (*fps[4])(long long int) 
+    = { compute_pi_sum1, compute_pi_sum2, compute_pi_sum3, compute_pi_sum4 }; 
 
 START_TEST (test_compute_pi_sums)
 {
@@ -135,7 +135,7 @@ START_TEST (test_pi)
 {
     long double actual = pi(1000000 + 1);
     long double expected  = 0.423429797567540358599812674109;
-    long double tolerance = 0.0000000000000001;
+    long double tolerance = 0.00000000000001;
     long double delta = fabs(actual - expected);
     char err_msg[200];
     sprintf(
@@ -178,7 +178,7 @@ END_TEST
 static const char* expecteds[] =         
     { "243F6A88", "43F6A888", "3F6A8885", "26C65E52CB4593", "17AF5863EFED8D", 
       "ECB840E21926EC", "85895585A0428B" };
-static const int pi_hex_precision[] = { 8, 8, 8, 12, 12, 11};
+static const int pi_hex_precision[] = { 8, 8, 8, 12, 12, 11, 12};
 static const long ns[] =  { 1, 2, 3, 1000000, 10000000, 100000000, 1000000000 };
 
 START_TEST (test_pi_hex)
@@ -233,9 +233,7 @@ my_suite (void)
   tcase_add_loop_test (tc_core, test_log_2_binary, 0, 3);
   tcase_add_loop_test (tc_core, test_compute_pi_sums, 0, 4);
   tcase_add_test (tc_core, test_pi);
-  tcase_add_loop_test (tc_core, test_pi_hex, 0, 6);
-  tcase_add_loop_test (tc_core, test_compute_pi_sums_extended, 2, 4);
-  tcase_add_test (tc_core, test_pi_extended);
+  tcase_add_loop_test (tc_core, test_pi_hex, 0, 7);
 
   tcase_set_timeout (tc_core, 0);
   suite_add_tcase (s, tc_core);
@@ -248,8 +246,9 @@ my_suite (void)
 
       tcase_set_timeout (tc_extended, 0);
       suite_add_tcase (s, tc_extended);
-      tcase_add_loop_test (tc_extended, test_compute_pi_sums_extended, 0, 2);
+      tcase_add_loop_test (tc_extended, test_compute_pi_sums_extended, 0, 4);
       tcase_add_loop_test (tc_extended, test_pi_hex_extended, 3, 7);
+      tcase_add_test (tc_extended, test_pi_extended);
   }
 
   return s;
