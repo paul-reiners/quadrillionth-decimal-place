@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     mp_bitcnt_t default_float_prec = mpf_get_default_prec();
     printf("Default float precision is %lu bits.\n", default_float_prec);
     
-    int d;
+    long long int d;
     if (optind >= argc)
     {
         fprintf(stderr, "You must specify a d value.\n");
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 
             return 1;
         }
-        d = atoi(dvalue);
+        d = atoll(dvalue);
     }
 
     time_t t1, t2;
@@ -99,14 +99,14 @@ int main(int argc, char* argv[])
     char* result = NULL;
     if (nvalue == NULL || strcmp(nvalue, "pi") == 0)
     {
-        fprintf(stderr, "Computing hex digits of pi beginning at position %d.\n", d);
+        fprintf(stderr, "Computing hex digits of pi beginning at position %lld.\n", d);
         result = pi_hex(d, PLACES);
-        fprintf(stderr, "Hex digits of pi beginning at position %d.\n", d);
+        fprintf(stderr, "Hex digits of pi beginning at position %lld.\n", d);
     }
     else if (strcmp(nvalue, "log2") == 0)
     {
         result = log_2_binary(d, PLACES);
-        fprintf(stderr, "Binary digits of log(2) beginning at position %d: ", d);
+        fprintf(stderr, "Binary digits of log(2) beginning at position %lld: ", d);
     }
     else
     {
