@@ -3,7 +3,7 @@ An implementation in C of the Bailey–Borwein–Plouffe (BBP) formula that allo
 
 This is a project for HarvardX CS50x.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/1fPUBExEy_c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![video on project](https://img.youtube.com/vi/1fPUBExEy_c/0.jpg)](https://www.youtube.com/watch?v=1fPUBExEy_c)
 
 <h2>Overview</h2>
 
