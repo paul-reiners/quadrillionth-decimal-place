@@ -1,6 +1,7 @@
 <h1>quadrillionth-decimal-place</h1>
 An implementation in C of the Bailey–Borwein–Plouffe (BBP) formula that allows you to compute an arbitrary hexadecimal digit of pi without computing any of the preceding digits.
 
+
 This is a project for HarvardX CS50x.
 
 [![video on project](https://img.youtube.com/vi/1fPUBExEy_c/0.jpg)](https://www.youtube.com/watch?v=1fPUBExEy_c)
