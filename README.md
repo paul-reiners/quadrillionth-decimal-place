@@ -17,8 +17,6 @@ about 10 seconds, the 10 millionth digit in about 2 minutes and the 100 milliont
 20 minutes (the BBP algorithm is linear in d where d is the digit place). I used the GNU MP Bignum 
 Library to achieve this level of precision.
 
-[Here](https://youtu.be/1fPUBExEy_c) is a video I made on this project.
-
 <h2>Features</h2>
 <ul>
     <li>
